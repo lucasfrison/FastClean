@@ -1,0 +1,36 @@
+.modal-editar, .modal-nova-peca {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.6);
+    z-index: 99;
+}
+
+.modal-content {
+    width: 50vw;
+    height: 35vh;
+    padding: 2rem;
+    background-color: white;
+    margin: auto;
+}
+
+.modal-content-nova {
+    width: 50vw;
+    height: 50vh;
+    padding: 2rem;
+    background-color: white;
+    margin: auto;
+}
+
+.modal-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hidden {
+    display: none;
+}
+

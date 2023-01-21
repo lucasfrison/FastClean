@@ -1,0 +1,114 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 10 de dez. de 2022, 18:53:45
+    Author     : james
+*/
+img {
+    width: 300px;
+    height: 200px;
+}
+
+form{	
+    width: 300px;
+    height: auto;
+    margin: 0 auto auto auto;
+    padding: 20px;
+    border: 3px ;
+    border-radius: 10px;
+}
+
+    form label, form fieldset{
+	font: bold 18px calibri, Arial, Courier;
+    }
+
+    form input{		
+   	box-sizing: border-box;
+   	border: 3px solid #ccc;
+   	font: 15px arial, sans-serif;
+	margin-bottom: 12px;	
+    }
+
+    form input:hover{
+
+    }
+
+    form input:focus{
+	border: 3px solid #333;			
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+    	outline: none;
+    }
+
+    form input[type=text]{
+        width: 100%;
+	padding: 3px 5px;	    
+    }
+
+    form input[type=date]{
+        padding: 1px 5px;
+    }
+
+    form fieldset{				
+	width:125px;
+	height:auto;
+	border: none;
+	border-radius: 10px;
+    }
+			
+    form fieldset input[type=radio]{
+	width: 15px;
+	height: 15px;
+    }
+
+    form fieldset label{			
+	font: 16px arial, sans-serif;
+    }
+
+    form input[type=submit]{
+    	transition: 0.1s;
+    	border: 0 none; 
+    	border-radius: 20px;  		
+	background-color: blue;				
+	color: white;			
+	cursor: pointer;
+    }
+
+table{
+    width: auto;
+    margin: 0 auto;
+    border-collapse: collapse;    
+}
+    table caption{
+        font: 15px sans-serif;
+        text-shadow: 2px 2px lightgray;
+    }
+	
+    table thead tr{ 
+        background-color: blue;
+        color:white;
+    }
+    
+    table thead tr th {		
+        padding: 3px 8px;
+        border-bottom:2px solid blue;
+        border-right: 1px solid blue;
+    }
+
+    table tbody tr:hover {
+    	background-color: lightblue;		
+    }
+        
+    table tbody td{	
+	border: 1px dotted gray;
+	padding: 3px 6px;
+    }
+
+    table button{
+	border-radius: 10px;
+	background-color: darkblue;
+	color: lightblue;
+	padding: 3px 15px;
+    }       
