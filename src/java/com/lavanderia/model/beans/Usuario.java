@@ -16,6 +16,7 @@ public abstract class Usuario implements Serializable {
     private String email;
     private String nome;
     private String senha;
+    private boolean funcionario;
 
     public int getId() {
         return id;
@@ -50,7 +51,11 @@ public abstract class Usuario implements Serializable {
     }
     
     public boolean isFuncionario() {
-        return this instanceof Funcionario;
+        return funcionario;
+    }
+
+    public void setFuncionario(boolean funcionario) {
+        this.funcionario = funcionario;
     }
   
 }
