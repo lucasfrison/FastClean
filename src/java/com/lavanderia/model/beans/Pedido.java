@@ -16,7 +16,6 @@ public class Pedido implements Serializable {
     
     private int id;
     private Cliente cliente;
-    private Funcionario atendente;
     private List<Roupa> roupas;
     private double valorTotal;
     private Date prazo;
@@ -39,14 +38,6 @@ public class Pedido implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public Funcionario getAtendente() {
-        return atendente;
-    }
-
-    public void setAtendente(Funcionario atendente) {
-        this.atendente = atendente;
     }
 
     public List<Roupa> getRoupas() {
