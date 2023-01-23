@@ -12,7 +12,7 @@ import com.lavanderia.exceptions.DAOException;
 import java.util.List;
 
 public interface DAO<T> {
-    public T buscar(String string) throws DAOException;
+    public T buscar(int id) throws DAOException;
     public List<T> buscarTodos() throws DAOException;
     public void inserir(T t) throws DAOException;
     public void atualizar(T t) throws DAOException;
