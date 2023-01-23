@@ -18,6 +18,9 @@ public class Usuario implements Serializable {
     private String senha;
     private boolean funcionario;
 
+    public Usuario() {
+    }
+
     public int getId() {
         return id;
     }
