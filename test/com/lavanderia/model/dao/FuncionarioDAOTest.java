@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class FuncionarioDAOTest {
     
-    final int ID = 14;
+    final int ID = 15;
     
     public FuncionarioDAOTest() {
     }
