@@ -16,5 +16,5 @@ public interface DAO<T> {
     public List<T> buscarTodos() throws DAOException;
     public void inserir(T t) throws DAOException;
     public void atualizar(T t) throws DAOException;
-    public void remover(T t) throws DAOException;
+    public void remover(int id) throws DAOException;
 }
