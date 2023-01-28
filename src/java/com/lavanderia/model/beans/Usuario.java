@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author lucfg
  */
-public class Usuario implements Serializable {
+public abstract class Usuario implements Serializable {
     
     private int id;
     private String email;

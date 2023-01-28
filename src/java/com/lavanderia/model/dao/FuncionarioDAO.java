@@ -101,7 +101,7 @@ public class FuncionarioDAO implements DAO<Funcionario> {
             con.setAutoCommit(false);
             stUsuario.setString(1, func.getEmail());
             stUsuario.setString(2, func.getSenha());
-            stUsuario.setBoolean(3, func.isFuncionario());
+            stUsuario.setBoolean(3, true);
             stUsuario.setString(4, func.getNome());
             stUsuario.executeUpdate();
             ResultSet rs = stUsuario.getGeneratedKeys(); 
