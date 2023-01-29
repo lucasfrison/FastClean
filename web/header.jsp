@@ -24,7 +24,7 @@
                             <div class="user-nav d-sm-flex d-none"></div><span class="avatar">Administrador</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                            <a class="dropdown-item" href="ManutencaoFuncionario.jsp"><i class="bi bi-toggles"></i> Funcionários</a>
+                            <a class="dropdown-item" href="FuncionarioServlet"><i class="bi bi-toggles"></i> Funcionários</a>
                             <a class="dropdown-item" href="RoupasServlet">  Roupas</a>
                             <a class="dropdown-item" href="Clientes.pdf">  PDF - Clientes</a>
                             <a class="dropdown-item" href="ClientesFieis.pdf">  PDF - Clientes Fiéis</a>
