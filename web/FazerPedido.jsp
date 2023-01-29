@@ -11,6 +11,7 @@
         <jsp:include page="sources.jsp" /> <%-- HEAD --%>  
         <title>Fazer Pedido - FastClean</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+        <link rel="stylesheet" href="css/fazerPedido.css" type="text/css">
     </head>
     <body>
         <jsp:include page="header.jsp" />
@@ -18,8 +19,8 @@
             <h1 class="text-light text-center">Novo Pedido</h1>
             <form action="#" method="post">
                 <h3 class="text-light mt-3">Roupas</h3>
-                <table class="table table-light">
-                    <thead class="table-dark">
+                <table>
+                    <thead>
                         <tr>
                             <th>Selecionar</th>
                             <th class="w-50">Nome</th>
@@ -53,8 +54,8 @@
                     </tbody>
                 </table>
                 <h3 class="text-light mt-3">Cama,Mesa e Banho</h3>
-                <table class="table table-light">
-                    <thead class="table-dark">
+                <table>
+                    <thead>
                         <tr>
                             <th>Selecionar</th>
                             <th class="w-50">Nome</th>
@@ -94,7 +95,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-success btnOrcamento">Solicitar Orçamento</button>
+                <button class="btn btnOrcamento mt-3">Solicitar Orçamento</button>
                 <div class="orcamento hidden text-light mt-2 fw-bolder">
                     <p class="fs-3">Valor total do pedido: R$<spam class="orcamentoValor">####</spam>.00</p>
                     <p class="fs-3">Prazo de lavagem: <spam class="orcamentoPrazo">#</spam> dias úteis</p>

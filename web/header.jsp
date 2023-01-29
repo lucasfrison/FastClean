@@ -25,7 +25,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                             <a class="dropdown-item" href="ManutencaoFuncionario.jsp"><i class="bi bi-toggles"></i> Funcionários</a>
-                            <a class="dropdown-item" href="ManutencaoRoupas.jsp">  Roupas</a>
+                            <a class="dropdown-item" href="RoupasServlet">  Roupas</a>
                             <a class="dropdown-item" href="Clientes.pdf">  PDF - Clientes</a>
                             <a class="dropdown-item" href="ClientesFieis.pdf">  PDF - Clientes Fiéis</a>
                             <a class="dropdown-item" href="Receitas.pdf">  PDF - Receitas</a>

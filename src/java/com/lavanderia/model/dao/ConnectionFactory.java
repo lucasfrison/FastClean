@@ -18,6 +18,7 @@ public class ConnectionFactory {
     private static final String URL = "jdbc:mysql://localhost:3306/lavanderia?useSSL=false&useTimezone=true&serverTimezone=UTC";
     private static final String LOGIN = "root";
     private static final String SENHA = "root";
+    //private static final String SENHA = "mysql";
     
     public static Connection getConnection() throws DAOException {  
         try {
