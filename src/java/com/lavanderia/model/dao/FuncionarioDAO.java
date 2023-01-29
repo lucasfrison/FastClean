@@ -56,7 +56,8 @@ public class FuncionarioDAO implements DAO<Funcionario> {
     private final String QUERY_BUSCAR_TODOS =
             "SELECT id_usuario, email_usuario, senha_usuario, " +
             "is_perfil_funcionario, nome_usuario, nasc_funcionario " +
-            "FROM tb_usuarios JOIN tb_funcionarios";
+            "FROM tb_usuarios u JOIN tb_funcionarios f " +
+            "ON u.id_usuario = f.id_funcionario";
 
     public FuncionarioDAO(Connection con) throws DAOException {
         if (con == null)

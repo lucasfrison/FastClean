@@ -25,14 +25,16 @@ public class LoginDAOTest {
         Login login = new Login();
         login.setEmail("teste@funcionarios.com");
         login.setSenha("teste1234");
-        assertTrue(LoginDAO.isLoginValido(login));
+        assertTrue(new LoginDAO()
+                                .isLoginValido(login));
     }
     
     @Test
     public void testIsFuncionario() throws Exception {
         Login login = new Login();
         login.setEmail("teste@funcionarios.com");
-        assertTrue(LoginDAO.isFuncionario(login));
+        assertTrue(new LoginDAO()
+                                .isFuncionario(login));
     }
     
 }

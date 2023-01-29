@@ -75,6 +75,14 @@ form{
 	color: white;			
 	cursor: pointer;
     }
+    
+    form button {
+        transition: 0.1s;
+        border: 0 none;
+        border-radius: 20px;
+        background-color: blue;
+        color: white;
+    }
 
 table{
     width: auto;
@@ -111,4 +119,4 @@ table{
 	background-color: darkblue;
 	color: lightblue;
 	padding: 3px 15px;
-    }       
+    }   

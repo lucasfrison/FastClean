@@ -22,9 +22,9 @@ public class LoginDAO {
             "SELECT email_usuario, senha_usuario, " +
             "is_perfil_funcionario FROM tb_usuarios u where u.email_usuario = ?";
     
-    public static boolean isLoginValido(Login login) throws DAOException {
-        try ( Connection con = ConnectionFactory.getConnection();
-              PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_USUARIO)) {
+    public boolean isLoginValido(Login login) throws DAOException {
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_USUARIO)) {
             st.setString(1, login.getEmail());
             st.executeQuery();
             ResultSet rs = st.getResultSet();
@@ -37,9 +37,9 @@ public class LoginDAO {
         }
     }
     
-    public static boolean isFuncionario(Login login) throws DAOException {
-        try ( Connection con = ConnectionFactory.getConnection();
-              PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_USUARIO)) {
+    public boolean isFuncionario(Login login) throws DAOException {
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_USUARIO)) {
             st.setString(1, login.getEmail());
             st.executeQuery();
             ResultSet rs = st.getResultSet();
