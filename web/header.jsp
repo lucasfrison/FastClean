@@ -26,10 +26,10 @@
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                             <a class="dropdown-item" href="FuncionarioServlet"><i class="bi bi-toggles"></i> Funcionários</a>
                             <a class="dropdown-item" href="RoupasServlet">  Roupas</a>
-                            <a class="dropdown-item" href="Clientes.pdf">  PDF - Clientes</a>
-                            <a class="dropdown-item" href="ClientesFieis.pdf">  PDF - Clientes Fiéis</a>
-                            <a class="dropdown-item" href="Receitas.pdf">  PDF - Receitas</a>
-                            <a class="dropdown-item" href="Pedidos.pdf">  PDF - Pedidos</a>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioClientes" target="_blank">  PDF - Clientes</a>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioClientesFieis" target="_blank">  PDF - Clientes Fiéis</a>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioReceitas" target="_blank">  PDF - Receitas</a>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioPedidos" target="_blank">  PDF - Pedidos</a>
                             
                         </div>
                     </li>
