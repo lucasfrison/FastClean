@@ -56,7 +56,6 @@
                    <input type="submit" class="btn btn-primary" name="" id="btnCadastrarSalvar" value="Confirmar">
                </div>               
            </form>
-           <a href="FuncionarioServlet"><input class="btn btn-primary" id="btnListar" value="Listar"></a>
            <table>
                 <h2 class="text-center">Lista de Funcionários</h2>
                 <thead>
