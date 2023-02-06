@@ -52,12 +52,8 @@ public class Pedido implements Serializable {
         return valorTotal;
     }
 
-    public void setValorTotal() {
-        double valorTotal = 0;
-        for (Roupa r : roupas) {
-            valorTotal += r.getCustoLavagem();
-        }
-        this.valorTotal = valorTotal;
+    public void setValorTotal(double valor) {
+        this.valorTotal = valor;
     }
 
     public Date getPrazo() {

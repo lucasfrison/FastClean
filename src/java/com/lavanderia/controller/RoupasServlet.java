@@ -4,6 +4,10 @@
  */
 package com.lavanderia.controller;
 
+import com.lavanderia.exceptions.BuscarRoupaException;
+import com.lavanderia.exceptions.EditarRoupaException;
+import com.lavanderia.exceptions.InserirRoupaException;
+import com.lavanderia.exceptions.RemoverRoupaException;
 import com.lavanderia.facade.RoupasFacade;
 import com.lavanderia.model.beans.Roupa;
 import jakarta.servlet.RequestDispatcher;
@@ -13,6 +17,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -31,67 +37,94 @@ public class RoupasServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        // Acesso pelo NAV
-        
-        // Esboço Inicial 
+
         String action = request.getParameter("action");
-        if (action == null) {
-            List<Roupa> lista = RoupasFacade.buscarRoupas();
-            request.setAttribute("roupas", lista);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/ManutencaoRoupas.jsp");
-            rd.forward(request, response);
-        }
-        
         int id;
         Roupa roupa = null;
         RequestDispatcher rd;
         
+        if (action == null) {
+            List<Roupa> lista = RoupasFacade.buscarRoupas();
+            request.setAttribute("roupas", lista);
+            rd = getServletContext().getRequestDispatcher("/ManutencaoRoupas.jsp");
+            rd.forward(request, response);
+        }
+        
         switch (action) {
             case "alterarform":
-                id = Integer.parseInt(request.getParameter("id"));
-                roupa = RoupasFacade.buscarRoupa(id);
-                request.setAttribute("roupa", roupa);
-                request.setAttribute("form", "alterar");
-                rd = getServletContext().getRequestDispatcher("/FormRoupa.jsp");
-                rd.forward(request, response);
-                break;
+                try {
+                    String idS = request.getParameter("id");
+                    id = Integer.parseInt(idS);
+                    roupa = RoupasFacade.buscarRoupa(id);
+                    request.setAttribute("roupa", roupa);
+                    request.setAttribute("form", "alterar");
+                    rd = getServletContext().getRequestDispatcher("/FormRoupa.jsp");
+                    rd.forward(request, response);
+                    break;
+                }  catch (NumberFormatException | IOException e) {
+                    throw new RuntimeException(e);
+                } catch (BuscarRoupaException e) {
+                    request.setAttribute("mensagem", "ERRO: " + e.getMessage());
+                    rd = request.getRequestDispatcher("/erro.jsp");
+                    rd.forward(request, response);
+                }
             case "alterar":
-                roupa = new Roupa();
-                roupa.setId(Integer.parseInt(request.getParameter("roupa-id")));
-                roupa.setNome(request.getParameter("roupa-nome"));
-                roupa.setPrazoLavagem(Integer.parseInt(request.getParameter("roupa-prazo")));
-                roupa.setCustoLavagem(Double.parseDouble(request.getParameter("roupa-preco")));
-                RoupasFacade.alterarRoupa(roupa);
-                response.sendRedirect("RoupasServlet");
-                break;
+                try {
+                    roupa = new Roupa();
+                    roupa.setId(Integer.parseInt(request.getParameter("roupa-id")));
+                    roupa.setNome(request.getParameter("roupa-nome"));
+                    roupa.setPrazoLavagem(Integer.parseInt(request.getParameter("roupa-prazo")));
+                    roupa.setCustoLavagem(Double.parseDouble(request.getParameter("roupa-preco")));
+                    RoupasFacade.alterarRoupa(roupa);
+                    response.sendRedirect("RoupasServlet");
+                    break;
+                } catch (NumberFormatException | IOException e) {
+                    throw new RuntimeException(e);
+                } catch (EditarRoupaException e) {
+                    request.setAttribute("mensagem", "ERRO: " + e.getMessage());
+                    rd = request.getRequestDispatcher("/erro.jsp");
+                    rd.forward(request, response); 
+                }
             case "remover":
-                roupa = new Roupa();
-                roupa.setId(Integer.parseInt(request.getParameter("id")));
-                RoupasFacade.removerRoupa(roupa.getId());
-                response.sendRedirect("RoupasServlet");
-                break;
+                try {
+                    roupa = new Roupa();
+                    roupa.setId(Integer.parseInt(request.getParameter("id")));
+                    RoupasFacade.removerRoupa(roupa.getId());
+                    response.sendRedirect("RoupasServlet");
+                    break;
+                } catch (NumberFormatException | IOException e) {
+                    throw new RuntimeException(e);
+                } catch (RemoverRoupaException e) {
+                    request.setAttribute("mensagem", "ERRO: " + e.getMessage());
+                    rd = request.getRequestDispatcher("/erro.jsp");
+                    rd.forward(request, response); 
+                }
             case "incluirform":
                 rd = getServletContext().getRequestDispatcher("/FormRoupa.jsp");
                 rd.forward(request, response);
                 break;
             case "incluir":
-                roupa = new Roupa();
-                roupa.setNome(request.getParameter("roupa-nome"));
-                roupa.setPrazoLavagem(Integer.parseInt(request.getParameter("roupa-prazo")));
-                roupa.setCustoLavagem(Double.parseDouble(request.getParameter("roupa-preco")));
-                RoupasFacade.inserirRoupa(roupa);
-                response.sendRedirect("RoupasServlet");
-                break;
-            default:
-                System.out.println("DEFAULT");
+                try {
+                    roupa = new Roupa();
+                    roupa.setNome(request.getParameter("roupa-nome"));
+                    roupa.setPrazoLavagem(Integer.parseInt(request.getParameter("roupa-prazo")));
+                    roupa.setCustoLavagem(Double.parseDouble(request.getParameter("roupa-preco").replace(',', '.')));
+                    RoupasFacade.inserirRoupa(roupa);
+                    response.sendRedirect("RoupasServlet");
+                    break;
+                } catch (IOException | NumberFormatException e) {
+                    throw new RuntimeException(e);
+                } catch (InserirRoupaException e) {
+                    request.setAttribute("mensagem", "ERRO: " + e.getMessage());
+                    rd = request.getRequestDispatcher("/erro.jsp");
+                    rd.forward(request, response); 
+                }
         }
-        
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

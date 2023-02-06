@@ -4,6 +4,7 @@
     Author     : goldb
 --%>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,7 +21,7 @@
         <div class="container">
             <h1 style="text-transform: uppercase;" class="text-center text-light">Roupas Cadastradas</h1>
             <div class="bg-nova-peca p-3 d-flex gap-3 justify-content-between mt-5">
-                <a href="RoupasServlet?action=incluirform" role="button" class="btn nova-peca">Nova Peça</a>
+                <a href="<c:url value="RoupasServlet?action=incluirform"/>" role="button" class="btn nova-peca">Nova Peça</a>
                 <div>
                     <div class="input-group">
                         <input 
@@ -42,12 +43,12 @@
                 <tbody>
                     <c:forEach var="roupa" items="${roupas}">
                         <tr class="row-tbody">
-                            <td class="field-nome">${roupa.nome}</td>
-                            <td class="field-prazo">${roupa.prazoLavagem} dias úteis</td>
-                            <td class="field-valor">R$${roupa.custoLavagem}</td>
+                            <td class="field-nome"><c:out value="${roupa.nome}"/></td>
+                            <td class="field-prazo"><c:out value="${roupa.prazoLavagem}"/> dias úteis</td>
+                            <td class="field-valor"><fmt:formatNumber value="${roupa.custoLavagem}" type="currency" /></td>
                             <td class="text-center field-acao">
-                                <a style="width: 8rem;" class="btn nova-peca acao-editar" href="RoupasServlet?action=alterarform&id=${roupa.id}">Editar</a>
-                                <a style="width: 8rem;" class="btn btn-danger acao-excluir" href="RoupasServlet?action=remover&id=${roupa.id}">Excluir</a>
+                                <a style="width: 8rem;" class="btn nova-peca acao-editar" href="<c:url value="RoupasServlet?action=alterarform&id=${roupa.id}"/>">Editar</a>
+                                <a style="width: 8rem;" class="btn btn-danger acao-excluir" href="<c:url value="RoupasServlet?action=remover&id=${roupa.id}"/>">Excluir</a>
                             </td>
                         </tr>
                     </c:forEach>

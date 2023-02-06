@@ -1,6 +1,9 @@
 const checkBoxes = document.querySelectorAll(".checkSel");
 const btnOrcamento = document.querySelector(".btnOrcamento");
 const divOrcamento = document.querySelector(".orcamento");
+const form = document.querySelector("form");
+const btnCancelar = document.querySelector(".btn-cancelar");
+
 
 
 btnOrcamento.addEventListener("click", e => {
@@ -8,7 +11,7 @@ btnOrcamento.addEventListener("click", e => {
     
     if (checkedBoxes.length === 0) {
         e.preventDefault();
-        divOrcamento.classList.add('hidden');
+        divOrcamento.classList.add('d-none');
         return;
     }
     
@@ -20,11 +23,11 @@ btnOrcamento.addEventListener("click", e => {
         const checked = box.closest(".row-tbody").querySelector("input[name=quantidade]");
         if (checked.value === '') {
             contemQtde = false;
-            divOrcamento.classList.add('hidden');
+            divOrcamento.classList.add('d-none');
             return false;
         }  else {
             contemQtde = true;
-            valorPeca = Number(box.closest(".row-tbody").querySelector(".field-valor").textContent.slice(2));
+            valorPeca = Number(box.closest(".row-tbody").querySelector(".field-valor").textContent.slice(2).replace(',', '.'));
             valorPeca =  valorPeca * Number(box.closest(".row-tbody").querySelector(".inpQtde").value);
             valorTotal += valorPeca;
             
@@ -34,11 +37,12 @@ btnOrcamento.addEventListener("click", e => {
             }
         } 
     });
+
     
     if (contemQtde) {
         e.preventDefault();
-        divOrcamento.classList.remove('hidden');
-        document.querySelector('.orcamentoValor').textContent = valorTotal;
+        divOrcamento.classList.remove('d-none');
+        document.querySelector('.orcamentoValor').textContent = valorTotal.toFixed(2);
         document.querySelector('.orcamentoPrazo').textContent = prazo;
         
     }
@@ -58,4 +62,8 @@ checkBoxes.forEach( box => {
            checked.required = false;
        }
     }); 
+});
+
+btnCancelar.addEventListener("click", () => {
+    form.setAttribute('action', 'PedidoServlet?action=canceal');
 });
