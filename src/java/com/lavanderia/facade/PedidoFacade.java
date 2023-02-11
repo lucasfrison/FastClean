@@ -8,6 +8,7 @@ import com.lavanderia.exceptions.DAOException;
 import com.lavanderia.exceptions.InserirPedidoException;
 import com.lavanderia.model.beans.Pedido;
 import com.lavanderia.model.dao.PedidoDAO;
+import java.util.List;
 
 /**
  *
@@ -24,6 +25,26 @@ public class PedidoFacade {
         }
         catch(DAOException e) {
             throw new InserirPedidoException("Erro ao tentar inserir o pedido: " + e.getMessage());
+        }
+    }
+
+    public static List<Pedido> buscarPedidos() {
+        try {
+            List<Pedido> pedidos = pDao.buscarTodos();
+            return pedidos;
+        }
+        catch(DAOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Pedido buscarPedido(int idPedido) {
+        try {
+            Pedido pedido = pDao.buscar(idPedido);
+            return pedido;
+        }
+        catch(DAOException e) {
+            throw new RuntimeException(e);
         }
     }
     

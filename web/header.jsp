@@ -16,7 +16,7 @@
                     <div class="l3"></div>
                 </li>
                 <div class="diferente">
-                    <li><a href="dashboard.jsp">Dashboard</a></li>
+                    <li><a href="PedidoServlet?action=list">Dashboard</a></li>
                     <li><a href="PedidoServlet">Novo Pedido</a></li>
                     <li><a href="PesquisarPedidos.jsp">Pesquisar Pedido</a></li>
                     <li class="nav-item dropdown dropdown-user">

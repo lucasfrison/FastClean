@@ -114,7 +114,18 @@ public class PedidoServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp");
                 rd.forward(request, response);
             }
-        } 
+        } else if (action.equals("list")) {
+            List<Pedido> pedidos = PedidoFacade.buscarPedidos();
+            request.setAttribute("pedidos", pedidos);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
+            rd.forward(request, response);
+        } else if (action.equals("view")) {
+            int idPedido = Integer.parseInt(request.getParameter("id"));
+            Pedido pedido = PedidoFacade.buscarPedido(idPedido);
+            request.setAttribute("pedido", pedido);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/viewRequest.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

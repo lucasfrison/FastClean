@@ -4,6 +4,9 @@
     Author     : PC_Perussi
 --%>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +18,7 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/feather-icons"></script>
-
+        
     </head>
     <body>
         <jsp:include page="header.jsp" /> <%-- HEADER --%>
@@ -28,7 +31,7 @@
                    <button onclick="location.href='\PesquisarPedidosFunc.jsp'" id="buttonTop">Pesquisar/Filtrar</button> 
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
-                   <button onclick="location.href='\FazerPedido.jsp'" id="buttonTop">Novo Pedido</button> 
+                   <button onclick="location.href='\PedidoServlet'" id="buttonTop">Novo Pedido</button> 
                 </div>
             </div>
             
@@ -38,14 +41,26 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Cliente</th>
-                <th scope="col">Quantidade</th>
-                <th scope="col">Cores</th>
-                <th scope="col">Tipo</th>
+                <th scope="col">Prazo</th>
+                <th scope="col">Valor Total</th>
+                <th scope="col">Quantidade de Peças</th>
                 <th scope="col">Status</th>
                 <th scope="col">Ação</th>
               </tr>
             </thead>
             <tbody>
+                <c:forEach var="pedido" items="${pedidos}">
+                    <tr>
+                        <td><a id="link" href="viewRequest.jsp">${pedido.id}</a></td>
+                        <td>Sem Cliente no momento</td>
+                        <td><fmt:formatDate value="${pedido.prazo}" dateStyle="short"/></td>
+                        <td><fmt:formatNumber value="${pedido.valorTotal}" type="currency"/></td>
+                        <td><c:out value="${fn:length(pedido.roupas)}"/></td>
+                        <td class="situacao-<c:out value="${fn:replace(pedido.situacao,'_','')}"/>"><c:out value="${fn:replace(pedido.situacao,'_',' ')}"/></td>
+                        <td><a class="confirma" data-code="1"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='loader'></i></span></a></td>  
+                    </tr>
+                </c:forEach>
+              <!-- 
               <tr>
                 <th scope="row"><a id="link" href="viewRequest.jsp">0001</a></th>
                 <td><a id="link" href="viewRequest.jsp">Lucas Perussi</a></td>
@@ -118,7 +133,7 @@
                 <td><span style="color: red; font-weight: bolder;">REJEITADO </span></td>                
                 <td></td>              
               </tr >
-             
+             -->
              
             </tbody>
           </table>
