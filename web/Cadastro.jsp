@@ -77,7 +77,7 @@
                <div class="form-group">
                    <div class="form-group col-md-2">
                         <label for="inputEstado">Número</label>
-                        <input class="form-control" name="numero" type="text" id="numero" size="2" /></label><br />
+                        <input class="form-control" name="numero" type="number" id="numero" size="2" /></label><br />
                    </div>
                    <div class="form-group col-md-4">
                        <label for="inputCidade">Cidade</label>
