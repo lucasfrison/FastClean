@@ -43,45 +43,12 @@ public class EmailUtil {
             System.out.println("Message is ready");
             Transport.send(msg);
 
-<<<<<<< HEAD
             System.out.println("Email Sent Successfully!!");
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
-=======
-	      System.out.println("Email Sent Successfully!!");
-	    }
-	    catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	}
-        
-        public static void preparaEmail(String toEmail, String password) {
-            String smtpHostServer = "smtp.gmail.com";
-            String boasVindas = 
-                    "Bem vindo à FastClean, aqui está sua senha de acesso na plataforma de atendimento: \n Senha: ";
-
-            Properties props = System.getProperties();
-
-            props.put("mail.smtp.host", smtpHostServer);
-                props.put("mail.smtp.port", "587");
-                props.put("mail.smtp.starttls.enable","true");
-                props.put("mail.smtp.auth", true);
-                props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-                props.put("mail.smtp.EnableSSL.enable","true");
-
-                Authenticator auth = new Authenticator() {
-                    //override the getPasswordAuthentication method
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication("fastclean156@gmail.com", "qdgftlktrtwolbxo");
-                    }
-                };
-
-            Session session = Session.getInstance(props, auth);
-
-            sendEmail(session, toEmail,"Nova senha para FastClean", boasVindas + password);
->>>>>>> 4552fa35e164c43262f419d65074643b84aa937e
         }
+
     }
 
     public static void preparaEmail(String toEmail, String password) {
@@ -91,13 +58,12 @@ public class EmailUtil {
 
         Properties props = System.getProperties();
 
-        
         props.put("mail.smtp.host", smtpHostServer);
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", true);
-        props.put("mail.smtp.EnableSSL.enable","true");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        props.put("mail.smtp.EnableSSL.enable", "true");
 
         Authenticator auth = new Authenticator() {
             //override the getPasswordAuthentication method
@@ -109,5 +75,6 @@ public class EmailUtil {
         Session session = Session.getInstance(props, auth);
 
         sendEmail(session, toEmail, "Nova senha para FastClean", boasVindas + password);
+
     }
 }

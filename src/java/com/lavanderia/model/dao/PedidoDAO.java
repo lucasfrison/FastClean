@@ -34,7 +34,9 @@ public class PedidoDAO implements DAO<Pedido> {
     
     @Override
     public Pedido buscar(int id) throws DAOException {
+        /*
         try(Connection conn = ConnectionFactory.getConnection(); PreparedStatement pst = conn.prepareStatement(select)) {
+            
             
             Pedido pedido = new Pedido();
             pst.setInt(1, id);
@@ -45,7 +47,7 @@ public class PedidoDAO implements DAO<Pedido> {
                 pedido.setValorTotal(rs.getDouble("valor_pedido"));
                 pedido.setSituacao(EstadoPedido.valueOf(rs.getString("estado_pedido")));
                 List<Roupa> roupas = buscarRoupas(rs.getInt("id_pedido")); 
-                p.setRoupas(roupas);
+                pedido.setRoupas(roupas);
                 pedidos.add(p);
             }
             
@@ -57,6 +59,7 @@ public class PedidoDAO implements DAO<Pedido> {
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
+        */
     }
 
     @Override
