@@ -18,14 +18,24 @@ import java.sql.Connection;
  */
 public class CidadeFacade {
     
-    public static UF buscarPorId(int id) throws CidadeException {
+//    public static UF buscarPorId(int id) throws CidadeException {
+//        try (Connection con = ConnectionFactory.getConnection()) {
+//            return new EstadoDAO(con).buscarPorID(id);
+//        }
+//        catch(Exception e) {
+//            throw new CidadeException("Erro ao buscar cidade");
+//        }
+//    }
+    public static Cidade buscarPorId(int id) throws CidadeException {
         try (Connection con = ConnectionFactory.getConnection()) {
-            return new EstadoDAO(con).buscarPorID(id);
+            return new CidadeDAO(con).buscarPorID(id);
         }
         catch(Exception e) {
             throw new CidadeException("Erro ao buscar cidade");
         }
     }
+    
+    
     
     public static Cidade buscarPorSigla(String nome) throws CidadeException {
         try (Connection con = ConnectionFactory.getConnection()) {
