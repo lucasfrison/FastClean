@@ -10,8 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://bootswatch.com/3/superhero/bootstrap.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-        <script src="js/cadastro.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="js/masks.js"></script>
         <link href="css/main.css" type="text/css" rel="stylesheet">
         <title>Cadastro</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.png">
@@ -24,7 +25,13 @@
                <div class="form-row">
                    <div class="form-group col-md-3">
                        <label for="inputCpf">CPF</label>
-                       <input type="text" class="form-control" id="inputCpf" placeholder="CPF" required>
+                       <input
+                            type="text"
+                            class="form-control"
+                            id="cpf" name="cpf" 
+                            required="true" 
+                            maxlength="14" 
+                        />
                    </div>
                    <div class="form-group col-md-6">
                         <label for="inputNome">Nome</label>

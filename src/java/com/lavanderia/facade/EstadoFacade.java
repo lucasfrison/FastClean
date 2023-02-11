@@ -4,6 +4,7 @@
  */
 package com.lavanderia.facade;
 
+import com.lavanderia.exceptions.EstadoException;
 import com.lavanderia.model.beans.Funcionario;
 import com.lavanderia.model.beans.UF;
 import com.lavanderia.model.dao.ConnectionFactory;
@@ -21,7 +22,7 @@ public class EstadoFacade {
             return new EstadoDAO(con).buscarPorID(id);
         }
         catch(Exception e) {
-            throw new EstadoException(e);
+            throw new EstadoException("Erro ao buscar estado");
         }
     }
     
@@ -30,7 +31,7 @@ public class EstadoFacade {
             return new EstadoDAO(con).buscarPorSigla(sigla);
         }
         catch(Exception e) {
-            throw new EstadoException(e);
+            throw new EstadoException("Erro ao buscar estado");
         }
     }
     

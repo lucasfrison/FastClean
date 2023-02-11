@@ -4,6 +4,7 @@
  */
 package com.lavanderia.facade;
 
+import com.lavanderia.exceptions.CidadeException;
 import com.lavanderia.model.beans.Cidade;
 import com.lavanderia.model.beans.UF;
 import com.lavanderia.model.dao.CidadeDAO;
@@ -22,7 +23,7 @@ public class CidadeFacade {
             return new EstadoDAO(con).buscarPorID(id);
         }
         catch(Exception e) {
-            throw new CidadeException(e);
+            throw new CidadeException("Erro ao buscar cidade");
         }
     }
     
@@ -31,7 +32,7 @@ public class CidadeFacade {
             return new CidadeDAO(con).buscarPorNome(nome);
         }
         catch(Exception e) {
-            throw new CidadeException(e);
+            throw new CidadeException("Erro ao buscar cidade");
         }
     }
     
