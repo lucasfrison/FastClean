@@ -21,11 +21,11 @@ public class EstadoDAO {
     
     private final String QUERY_SELECT_SIGLA = 
             "SELECT id_estado, nome_estado, sigla_estado" +
-            " WHERE sigla_estado = ?";
+            " FROM tb_estados WHERE sigla_estado = ?";
     
     private final String QUERY_SELECT_ID =
             "SELECT id_estado, nome_estado, sigla_estado" +
-            " WHERE id_estado = ?";
+            " FROM tb_estados WHERE id_estado = ?";
     
     public EstadoDAO(Connection con) throws com.lavanderia.exceptions.DAOException {
         if (con == null)
