@@ -13,6 +13,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="js/masks.js"></script>
+        <script src="js/cadastro.js"></script>
         <link href="css/main.css" type="text/css" rel="stylesheet">
         <title>Cadastro</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.png">
@@ -21,7 +22,7 @@
         <div class="container text-center container-border">
             <img onclick="location.href='index.html'" src="assets/logo.png" alt="alt"/></img>
             <legend>Cadastrar</legend>
-            <form action="Login.jsp" method="POST">
+            <form action="AutoCadastroServlet" method="POST">
                <div class="form-row">
                    <div class="form-group col-md-3">
                        <label for="inputCpf">CPF</label>
@@ -37,28 +38,28 @@
                         <label for="inputNome">Nome</label>
                        <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" id="inputNome" class="form-control" placeholder="Digite seu nome" required>
+                            <input type="text" id="inputNome" name="nome" class="form-control" placeholder="Digite seu nome" required>
                        </div>
                    </div>
                    <div class="form-group col-md-3">
                        <label for="inputTelefone">Telefone</label>
                        <div class="input-group">
                            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                           <input type="text" class="form-control" id="inputTelefone" placeholder="XX XXXXX-XXXX" maxlength="13" >
+                           <input type="text" class="form-control" name="telefone" id="inputTelefone" placeholder="XX XXXXX-XXXX" maxlength="13" >
                        </div>
                    </div>
                    <div class="form-group col-md-4">
                        <label for="inputEmail">Email</label>
                        <div class="input-group">
                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                           <input type="email" class="form-control" id="inputEmail" placeholder="fulano@email.com" >
+                           <input type="email" class="form-control" name="email" id="inputEmail" placeholder="fulano@email.com" >
                        </div>
                    </div>
                     <div class="form-group col-md-4">
                        <label for="inputEmail">CEP</label>
                        <div class="input-group">
                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-                           <input type="text" class="form-control" id="cep" value="" size="10" maxlength="9" placeholder="00000-000" onblur="pesquisacep(this.value);">
+                           <input type="text" class="form-control" id="cep" name="cep" value="" size="10" maxlength="9" placeholder="00000-000" onblur="pesquisacep(this.value);">
                        </div>
                    </div>
                </div>
@@ -66,12 +67,12 @@
                     <label for="inputAddress">Rua</label>
                    <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-road"></i></span>
-                        <input type="text" class="form-control" id="rua" placeholder="Av Vinicius de Morais, 25">
+                        <input type="text" class="form-control" name="rua" id="rua" placeholder="Av Vinicius de Morais, 25">
                     </div>
                </div>
                <div class="form-group col-md-4">
                    <label for="inputAddress2">Bairro</label>
-                   <input type="text" class="form-control" id="bairro" placeholder="Bairro Feliz">
+                   <input type="text" class="form-control" name="bairro" id="bairro" placeholder="Bairro Feliz">
                </div>
                <div class="form-group">
                    <div class="form-group col-md-2">
@@ -80,7 +81,7 @@
                    </div>
                    <div class="form-group col-md-4">
                        <label for="inputCidade">Cidade</label>
-                       <input type="text" class="form-control" id="cidade" placeholder="Cidade da Alegria">        
+                       <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade da Alegria">        
                    </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Estado</label>
