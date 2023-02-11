@@ -26,19 +26,14 @@ import java.util.logging.Logger;
  * @author PC_Perussi
  */
 public class ClienteDAO implements DAO<Cliente> {
-        
-
-//    private static final String QUERY_INSERIR_USER="INSERT INTO tb_clientes(email_usuario, senha_usuario, is_perfil_funcionario, nome_usuario) VALUES (?,?,?,?) ";;
-//    private static final String QUERY_SELECT_CLIENTE="SELECT * FROM tabela_filha JOIN tabela_pai ON tabela_filha.chave_estrangeira = tabela_pai.id WHERE tabela_filha.coluna = 'valor'\"";;
-    
+   
     private static final String QUERY_SELECT_CLIENTE="SELECT * FROM tb_clientes JOIN tb_usuarios ON tb_usuarios.id_cliente = tb_usuarios.id_usuario WHERE tb_clientes.id_cliente = ?";
     private static final String QUERY_SELECT_CLIENTES="SELECT * FROM tb_clientes JOIN tb_usuarios ON tb_usuarios.id_cliente = tb_usuarios.id_usuario";
     private static final String QUERY_REMOVER_CLIENTE ="DELETE FROM tb_clientes WHERE id_cliente = ?";
     private static final String QUERY_REMOVER_USUARIO ="DELETE FROM tb_usuarios WHERE id_usuario = ?";
     private final String QUERY_ATUALIZAR_USUARIO ="UPDATE tb_usuarios SET email_usuario = ?, senha_usuario = ?, nome_usuario = ? WHERE id_usuario = ?";
-    private final String QUERY_ATUALIZAR_CLIENTE = "UPDATE tb_clientes SET cpf_cliente = ?, fone_cliente = ?, bairro_cliente = ?, id_cidade_cliente = ?, id_estado_cliente = ?, numero_cliente = ? , rua_cliente = ?, rua_cliente = ?  WHERE id_funcionario = ?";
+    private final String QUERY_ATUALIZAR_CLIENTE = "UPDATE tb_clientes SET cpf_cliente = ?, fone_cliente = ?, bairro_cliente = ?, id_cidade_cliente = ?, id_estado_cliente = ?, numero_cliente = ? , rua_cliente = ?  WHERE id_cliente = ?";
     
-//    private static final String QUERY_DELETE_CLIENTE="DELETE FROM tb_clientes JOIN tb_usuarios ON tb_clientes.id_cliente =  WHERE id_funcionario = ?"";;
     private Connection con;
 
     public ClienteDAO(Connection con) throws com.lavanderia.exceptions.DAOException {
@@ -89,7 +84,6 @@ public class ClienteDAO implements DAO<Cliente> {
         endereco.setBairro(rs.getString("bairro_cliente"));
         endereco.setCep(rs.getString("cep_cliente"));
         endereco.setNumero(rs.getInt("numero_cliente"));
-//        endereco.setCep(request.getParameter("cep").replace(".", "").replace("-", ""));
         cli.setEndereco(endereco);
         return cli;
     }
@@ -97,7 +91,6 @@ public class ClienteDAO implements DAO<Cliente> {
 
     @Override
     public List<Cliente> buscarTodos() throws DAOException {
-        
           try (PreparedStatement st = con.prepareStatement(QUERY_SELECT_CLIENTES)) {
             List<Cliente> listaClientes = new ArrayList<>();
             ResultSet rs = st.executeQuery();
@@ -126,9 +119,14 @@ public class ClienteDAO implements DAO<Cliente> {
             stUsuario.setString(3, cli.getNome());
             stUsuario.setInt(4, cli.getId());
             stUsuario.executeUpdate();          
-//            stCliente.setDate(1, DateUtils.;
-//                    javaDateToSQLDate(func.getDataNascimento()));
-            stCliente.setInt(2, func.getId());
+            stCliente.setString(1, cli.getCpf());
+            stCliente.setString(2, cli.getTelefone());
+            stCliente.setString(3, cli.getEndereco().getBairro());
+            stCliente.setInt(4, cli.getEndereco().getCidade().getId());
+            stCliente.setInt(5, cli.getEndereco().getEstado().getId());
+            stCliente.setInt(6, cli.getEndereco().getNumero());
+            stCliente.setString(7, cli.getEndereco().getRua());
+            stCliente.setInt(8, cli.getId());
             stCliente.executeUpdate();
             con.commit();
             con.setAutoCommit(true);
@@ -136,12 +134,10 @@ public class ClienteDAO implements DAO<Cliente> {
             try {
                 con.rollback();
             } catch (SQLException ex) {
-                throw new DAOException("Erro ao atualizar o funcionário: ", ex);
+                throw new DAOException("Erro ao atualizar o cliente: ", ex);
             }
-            throw new DAOException("Erro ao atualizar o funcionário: ", e);
+            throw new DAOException("Erro ao atualizar o cliente: ", e);
         }
-
-
     }
 
     @Override
