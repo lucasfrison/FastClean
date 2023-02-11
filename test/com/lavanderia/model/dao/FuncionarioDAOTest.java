@@ -82,6 +82,6 @@ public class FuncionarioDAOTest {
         } catch(Exception e) {
             fail("Erro ao remover os funcionário!");
         }
-    }
+    }   
     
 }

@@ -20,7 +20,13 @@ public class AutoCadastroDAO {
     
     private Connection con;
 
-    private final String QUERY_REALIZAR_CADASTRO = "";
+    private final String QUERY_REALIZAR_CADASTRO_USUARIO = "INSERT INTO tb_usuarios(email_usuario, senha_usuario, " + 
+            "is_perfil_funcionario, nome_usuario) " +
+            "VALUES (?, ?, ?, ?)";
+    
+    private final String QUERY_REALIZAR_CADASTRO_CLIENTE = "INSERT INTO tb_clientes " + 
+            "(id_cliente, cpf_cliente, fone_cliente, bairro_cliente, id_cidade_cliente, id_estado_cliente, numero_cliente, rua_cliente, cep_cliente) " +
+            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     public AutoCadastroDAO(Connection con) throws com.lavanderia.exceptions.DAOException {
         if (con == null)
@@ -29,20 +35,30 @@ public class AutoCadastroDAO {
     }
     
     public void inserir(Cliente cliente) throws com.lavanderia.exceptions.DAOException {
-        try (PreparedStatement stCliente = 
-                con.prepareStatement(QUERY_REALIZAR_CADASTRO, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement stFuncionario = con.prepareStatement(QUERY_REALIZAR_CADASTRO)) 
+        try (PreparedStatement stUsuario = 
+                con.prepareStatement(QUERY_REALIZAR_CADASTRO_USUARIO, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement stCliente = con.prepareStatement(QUERY_REALIZAR_CADASTRO_CLIENTE)) 
         {
             con.setAutoCommit(false);
-            stCliente.setString(1, cliente.getEmail());
-            stCliente.setString(2, cliente.getSenha());
-            stCliente.setBoolean(3, true);
-            stCliente.setString(4, cliente.getNome());
-            stCliente.executeUpdate();
-            ResultSet rs = stCliente.getGeneratedKeys(); 
-            if (rs.next())
+            stUsuario.setString(1, cliente.getEmail());
+            stUsuario.setString(2, cliente.getSenha());
+            stUsuario.setBoolean(3, false);
+            stUsuario.setString(4, cliente.getNome());
+            stUsuario.executeUpdate();
+            ResultSet rs = stUsuario.getGeneratedKeys(); 
+            if (rs.next()){                  
                 stCliente.setInt(1, rs.getInt(1));
+                stCliente.setString(2, cliente.getCpf());
+                stCliente.setString(3, cliente.getTelefone());
+                stCliente.setString(4, cliente.getEndereco().getBairro());
+                stCliente.setInt(5, cliente.getEndereco().getCidade().getId());
+                stCliente.setInt(6, cliente.getEndereco().getEstado().getId());
+                stCliente.setInt(7, cliente.getEndereco().getNumero());
+                stCliente.setString(8, cliente.getEndereco().getRua());
+                stCliente.setString(9, cliente.getEndereco().getCep());
+            }
             stCliente.executeUpdate();
+            
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
