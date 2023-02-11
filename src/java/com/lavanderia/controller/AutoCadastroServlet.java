@@ -4,18 +4,15 @@
  */
 package com.lavanderia.controller;
 
-import com.lavanderia.exceptions.CidadeException;
-import com.lavanderia.exceptions.EstadoException;
-import com.lavanderia.exceptions.ClienteException;
-import com.lavanderia.facade.AutoCadastroFacade;
 import com.lavanderia.model.beans.Cidade;
 import com.lavanderia.model.beans.Cliente;
 import com.lavanderia.model.beans.Endereco;
-import com.lavanderia.model.dao.AutoCadastroDAO;
 import com.lavanderia.facade.AutoCadastroFacade;
 import com.lavanderia.facade.CidadeFacade;
 import com.lavanderia.facade.EstadoFacade;
 import com.lavanderia.model.beans.UF;
+import com.lavanderia.utils.EmailUtil;
+import com.lavanderia.utils.StringUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -29,7 +26,7 @@ import java.io.PrintWriter;
  *
  * @author james
  */
-@WebServlet(name = "CadastroServlet", urlPatterns = {"/CadastroServlet"})
+@WebServlet(name = "AutoCadastroServlet", urlPatterns = {"/AutoCadastroServlet"})
 public class AutoCadastroServlet extends HttpServlet {
 
     /**
@@ -55,6 +52,8 @@ public class AutoCadastroServlet extends HttpServlet {
                 UF estado = EstadoFacade.buscarPorSigla(request.getParameter("uf"));
                 Cidade cidade = CidadeFacade.buscarPorSigla(request.getParameter("cidade"));
                 cidade.setEstado(estado);
+                
+                endereco.setEstado(estado);
                 endereco.setCidade(cidade);
                 endereco.setRua(request.getParameter("rua"));
                 endereco.setNumero(Integer.parseInt(request.getParameter("numero")));
@@ -63,28 +62,26 @@ public class AutoCadastroServlet extends HttpServlet {
 
                 Cliente cliente = new Cliente();
                 cliente.setEndereco(endereco);
-
                 cliente.setNome(request.getParameter("nome"));
                 cliente.setTelefone(request.getParameter("telefone").replace("(", "").replace(")", "").replace("-", ""));
-                cliente.setSenha(request.getParameter("senha"));
-                cliente.setCpf(request.getParameter("cpf").replace(".", "").replace("-", ""));
+                
+                // cria nova senha e criptografa
+                String novaSenha = StringUtils.gerarSenha();         
+                cliente.setSenha(StringUtils.getSha256(novaSenha));
+                
+                cliente.setCpf(request.getParameter("cpf").replace(".", "").replace("-", ""));         
+                cliente.setEmail(request.getParameter("email"));
+                
+                AutoCadastroFacade.realizarCadastro(cliente);
+                EmailUtil.preparaEmail(cliente.getEmail(), novaSenha);
 
-                /*boolean confereEmail = StringUtils.confereEmail(request.getParameter("email"));
-                if (confereEmail) {
-                    request.setAttribute("msg", "Email ja cadastrado na base de dados");
-                    RequestDispatcher rd = request.getRequestDispatcher("/cliente/autoCadastro.jsp");
+                if (cliente != null) {
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                } else {
+                    request.setAttribute("msg", "Erro ao adicionar novo cliente");
+                    RequestDispatcher rd = sc.getRequestDispatcher("/erro.jsp");
                     rd.forward(request, response);
-                }*/// else {
-                    cliente.setEmail(request.getParameter("email"));
-                    AutoCadastroFacade.realizarCadastro(cliente);
-
-                    if (cliente != null) {
-                        response.sendRedirect(request.getContextPath() + "/index.jsp");
-                    } else {
-                        request.setAttribute("msg", "Erro ao adicionar novo cliente");
-                        RequestDispatcher rd = sc.getRequestDispatcher("/erro.jsp");
-                        rd.forward(request, response);
-                    }                
+                }                
             } catch (Exception e) {               
                 request.setAttribute("msg", "ERRO: " + e.getMessage());
                 RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp");

@@ -45,7 +45,7 @@ public class StringUtils {
         return hexString.toString();
     }
     
-    private static String gerarSenha() {
+    public static String gerarSenha() {
         String characters = LOWERCASE_CHARACTERS + UPPERCASE_CHARACTERS + NUMERIC_CHARACTERS + SPECIAL_CHARACTERS;
         Random random = new Random();
         char[] password = new char[PASSWORD_LENGTH];
