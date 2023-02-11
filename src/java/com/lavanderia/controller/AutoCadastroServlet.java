@@ -72,7 +72,7 @@ public class AutoCadastroServlet extends HttpServlet {
                 cliente.setCpf(request.getParameter("cpf").replace(".", "").replace("-", ""));         
                 cliente.setEmail(request.getParameter("email"));
                 
-                //AutoCadastroFacade.realizarCadastro(cliente);
+                AutoCadastroFacade.realizarCadastro(cliente);
                 EmailUtil.preparaEmail(cliente.getEmail(), novaSenha);
 
                 if (cliente != null) {
