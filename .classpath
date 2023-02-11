@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="build/web/WEB-INF/lib/hamcrest-2.2.jar"/>
+	<classpathentry kind="lib" path="build/web/WEB-INF/lib/junit-4.13.2.jar"/>
+	<classpathentry kind="lib" path="build/web/WEB-INF/lib/mysql-connector-j-8.0.32.jar"/>
+	<classpathentry kind="output" path="build/test/classes"/>
+</classpath>
