@@ -35,7 +35,7 @@
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioClientes" target="_blank">  PDF - Clientes</a>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioClientesFieis" target="_blank">  PDF - Clientes Fiéis</a>
                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioReceitas" target="_blank">  PDF - Receitas</a>
-                                <a class="dropdown-item" href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioPedidos" target="_blank">  PDF - Pedidos</a>
+                                <a class="dropdown-item" href="${pageContext.request.contextPath}/filtroPedidoRelatorio.jsp" target="_blank">  PDF - Pedidos</a>
                             </div>
                         </c:if>
                     </li>

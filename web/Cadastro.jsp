@@ -89,7 +89,7 @@
                    </div>
                </div>
                <div>
-                   <button type="submit" class="btn btn-primary">Enviar</button>
+                   <button href="${pageContext.request.contextPath}/GeradorRelatorioServlet?action=relatorioReceitas" target="_blank" type="submit" class="btn btn-primary">Enviar</button>
                </div>
            </form>
        </div>     

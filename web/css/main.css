@@ -8,7 +8,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 
 #center {
-    width: 40%;
+    width: 30%;
     margin: 150px auto;
 }
 
@@ -21,7 +21,20 @@ body {
 }
 
  .container-border{
- border: 10px solid #081b96;
+ border: 1px solid #081b96;
  border-radius: 15px;  
  margin-top: 50px;
  }
+ 
+ .smallTopGap {
+    margin-top: 20px;
+}
+
+.mediumTopGap {
+    margin-top: 50px
+}
+
+.searchButton {
+    background-color: transparent; 
+    border: none
+}

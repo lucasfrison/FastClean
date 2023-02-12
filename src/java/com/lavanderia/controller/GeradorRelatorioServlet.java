@@ -19,6 +19,10 @@ import jakarta.servlet.http.HttpSession;
 
 import com.lavanderia.exceptions.DAOException;
 import com.lavanderia.model.dao.relConnectionFactory;
+import com.lavanderia.utils.DateUtils;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,9 +84,29 @@ public class GeradorRelatorioServlet extends HttpServlet {
                     ops.write(bytes);
                 }
             } else if (action.equals("relatorioPedidos")) {
+                String dataInicio = request.getParameter("dataInicial");
+                String dataFinal = request.getParameter("dataFinal");
+                
+                if(dataInicio.equals("")) {
+                    dataInicio = "1999-05-05";                 
+                }
+                if(dataFinal.equals("")) {
+                    dataFinal = "2050-05-05";
+                }
+                
+                Date dataInicial = DateUtils.stringToJavaDate(dataInicio);
+                Date dataPrazo = DateUtils.stringToJavaDate(dataFinal);
+
+                
+                System.out.println(dataInicio);
+                System.out.println(dataFinal);
+
                 String relatorioReclamacoes = request.getContextPath() + "/ListaPedidos.jasper";
                 URL relatorioPedidosURL = new URL(host + relatorioReclamacoes);
-                HashMap params = new HashMap();
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("From_Date", dataInicial);
+                params.put("To_Date", dataPrazo);
+
                 byte[] bytes = JasperRunManager.runReportToPdf(relatorioPedidosURL.openStream(), params,
                         factory.getConnection());
                 if (bytes != null) {
@@ -91,7 +115,7 @@ public class GeradorRelatorioServlet extends HttpServlet {
                     ops.write(bytes);
                 }
             }
-        } catch (JRException e) {
+        } catch (JRException | ParseException e) {
             request.setAttribute("msg", "Erro no Jasper: " + e.getMessage());
             request.getRequestDispatcher("/erro.jsp").forward(request, response);
         }
