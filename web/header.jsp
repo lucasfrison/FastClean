@@ -9,7 +9,7 @@
 <header class="container-fluid shadow-sm mb-5">
         <nav>
             <ul class="nav-links">
-                <li class="link-esq"><a href="dashboard.jsp">Fastclean</a></li>
+                <li class="link-esq"><a href="PedidoServlet?action=list">Fastclean</a></li>
                 <li class="mobile">
                     <div class="l1"></div>
                     <div class="l2"></div>

@@ -1,13 +1,4 @@
-const btnAberto = document.querySelectorAll('.sit-aberto');
-const btnRejeitado = document.querySelectorAll('.sit-rejeitado');
-const btnRecolhido = document.querySelectorAll('.sit-recolhido');
-const btnAguardando = document.querySelectorAll('.sit-aguardando');
-const btnPago = document.querySelectorAll('.sit-pago');
-const btnFinalizado = document.querySelectorAll('.sit-finalizado');
-
 const sitBtns = document.querySelectorAll('.sit');
-
-console.log(sitBtns);
 
 sitBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -63,25 +54,5 @@ sitBtns.forEach(btn => {
     })
 })
 
-/*
- btnAberto.addEventListener('click', e => {
- Swal.fire({
- title: 'Deseja mesmo excluir a roupa?',
- text: "Não será possível reverter a ação!",
- icon: 'warning',
- showCancelButton: true,
- confirmButtonColor: '#35427a',
- cancelButtonColor: '#d33',
- confirmButtonText: 'Sim',
- cancelButtonText: 'Cancelar'
- }).then((result) => {
- if (result.isConfirmed) {
- // window.location.href = btn.getAttribute('href');
- }
- })
- e.preventDefault();
- })
- * 
- */
 
 
