@@ -127,6 +127,11 @@ public class PedidoServlet extends HttpServlet {
             request.setAttribute("funcionario", isFuncionario);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
             rd.forward(request, response);
+        } else if (action.equals("searchAll")) {
+            List<Pedido> pedidos = PedidoFacade.buscarPedidos();
+            request.setAttribute("pedidos", pedidos);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/PesquisarPedidos.jsp");
+            rd.forward(request, response);   
         } else if (action.equals("view")) {
             int idPedido = Integer.parseInt(request.getParameter("id"));
             Pedido pedido = PedidoFacade.buscarPedido(idPedido);
