@@ -35,7 +35,7 @@
                         </div>
                     </li>
                 </div>
-                <li class="link-dir"><a href="index.html">Sair</a></li>
+                <li class="link-dir"><a href="LogoutServlet">Sair</a></li>
             </ul>
         </nav>
 </header>
