@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class ClienteDAO implements DAO<Cliente> {
    
-    private static final String QUERY_SELECT_CLIENTE="SELECT * FROM tb_clientes JOIN tb_usuarios ON tb_usuarios.id_cliente = tb_usuarios.id_usuario WHERE tb_clientes.id_cliente = ?";
+    private static final String QUERY_SELECT_CLIENTE="SELECT * FROM tb_clientes JOIN tb_usuarios ON tb_usuarios.id_usuario = tb_clientes.id_cliente WHERE tb_clientes.id_cliente = ?";
     private static final String QUERY_SELECT_CLIENTES="SELECT * FROM tb_clientes JOIN tb_usuarios ON tb_usuarios.id_cliente = tb_usuarios.id_usuario";
     private static final String QUERY_REMOVER_CLIENTE ="DELETE FROM tb_clientes WHERE id_cliente = ?";
     private static final String QUERY_REMOVER_USUARIO ="DELETE FROM tb_usuarios WHERE id_usuario = ?";

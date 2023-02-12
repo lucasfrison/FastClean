@@ -29,15 +29,15 @@ public class PedidoDAO implements DAO<Pedido> {
     private final String selectAll = "SELECT * FROM tb_pedidos";
     private final String select = "SELECT * FROM tb_pedidos WHERE id_pedido=?";
     private final String selectIdRoupas = "SELECT * FROM tb_roupas_pedido WHERE id_pedido=?";
+    
+    
     private static RoupasDAO rDao = new RoupasDAO();
+    
     
     
     @Override
     public Pedido buscar(int id) throws DAOException {
-        /*
         try(Connection conn = ConnectionFactory.getConnection(); PreparedStatement pst = conn.prepareStatement(select)) {
-            
-            
             Pedido pedido = new Pedido();
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
@@ -47,11 +47,13 @@ public class PedidoDAO implements DAO<Pedido> {
                 pedido.setValorTotal(rs.getDouble("valor_pedido"));
                 pedido.setSituacao(EstadoPedido.valueOf(rs.getString("estado_pedido")));
                 List<Roupa> roupas = buscarRoupas(rs.getInt("id_pedido")); 
+                ClienteDAO cDao = new ClienteDAO(conn);
+                Cliente c = cDao.buscar(rs.getInt("id_cliente_pedido"));
+                pedido.setCliente(c);
                 pedido.setRoupas(roupas);
-                pedidos.add(p);
             }
             
-            return pedidos;
+            return pedido;
             
         }
         catch (SQLException e) {
@@ -59,7 +61,7 @@ public class PedidoDAO implements DAO<Pedido> {
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
-        */
+        
     }
 
     @Override
@@ -75,8 +77,11 @@ public class PedidoDAO implements DAO<Pedido> {
                 p.setPrazo(rs.getDate("prazo_pedido"));
                 p.setValorTotal(rs.getDouble("valor_pedido"));
                 p.setSituacao(EstadoPedido.valueOf(rs.getString("estado_pedido")));
-                List<Roupa> roupas = buscarRoupas(rs.getInt("id_pedido")); 
+                List<Roupa> roupas = buscarRoupas(rs.getInt("id_pedido"));
                 p.setRoupas(roupas);
+                ClienteDAO cDao = new ClienteDAO(conn);
+                Cliente c = cDao.buscar(rs.getInt("id_cliente_pedido"));
+                p.setCliente(c);
                 pedidos.add(p);
             }
             

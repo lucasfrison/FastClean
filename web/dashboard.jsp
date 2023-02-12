@@ -13,12 +13,11 @@
      <head>
         <title>Dashbaord - FastClean</title>
         <jsp:include page="sources.jsp" /> <%-- HEAD --%>  
-        <link href="css/dashboard.css" type="text/css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/feather-icons"></script>
-        
+        <link href="css/dashboard.css" type="text/css" rel="stylesheet">
     </head>
     <body>
         <jsp:include page="header.jsp" /> <%-- HEADER --%>
@@ -51,12 +50,12 @@
             <tbody>
                 <c:forEach var="pedido" items="${pedidos}">
                     <tr>
-                        <td><a id="link" href="viewRequest.jsp">${pedido.id}</a></td>
-                        <td>Sem Cliente no momento</td>
+                        <td><a id="link" href="PedidoServlet?action=view&id=${pedido.id}">${pedido.id}</a></td>
+                        <td><c:out value="${pedido.cliente.nome}"/></td>
                         <td><fmt:formatDate value="${pedido.prazo}" dateStyle="short"/></td>
                         <td><fmt:formatNumber value="${pedido.valorTotal}" type="currency"/></td>
                         <td><c:out value="${fn:length(pedido.roupas)}"/></td>
-                        <td class="situacao-<c:out value="${fn:replace(pedido.situacao,'_','')}"/>"><c:out value="${fn:replace(pedido.situacao,'_',' ')}"/></td>
+                        <td class="situacao situacao-<c:out value="${fn:replace(pedido.situacao,'_','')}"/>"><c:out value="${fn:replace(pedido.situacao,'_',' ')}"/></td>
                         <td><a class="confirma" data-code="1"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='loader'></i></span></a></td>  
                     </tr>
                 </c:forEach>
