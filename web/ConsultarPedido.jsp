@@ -13,8 +13,19 @@
         <title>Consultar Pedido</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" /> <%-- HEADER --%>
+        <jsp:include page="header.jsp" /> <%-- HEADER --%>   
         <div class="container text-light mt-5">
+            <form method="post">
+            <div class="form-group smallTopGap">
+                <label for="pedido"><h3>Pesquisar pedido</h3></label>
+                <div style="width: 50%" class="input-group">
+                    <input 
+                        name="pedido" type="text" id="search" class="form-control"
+                        placeholder="Pesquisar pedido...">
+                    <button class="btn btn-secondary" type="submit" >Pesquisar</button>
+                </div>
+            </form>
+            </div>  
             <h2>Consulta: Pedido 00001</h2>
             <table id="mainTable" class="table">
                 <thead>
