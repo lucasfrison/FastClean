@@ -68,5 +68,15 @@ public class PedidoFacade {
             throw new RuntimeException(e);
         }
     }
+
+    public static List<Pedido> buscarPedidosEmAberto(int id) {
+        try {
+            List<Pedido> pedidos = pDao.buscarTodosEmAberto(id);
+            return pedidos;
+        }
+        catch(DAOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     
 }
