@@ -1,6 +1,7 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isErrorPage = "true" %>
 
 <!DOCTYPE html>
@@ -15,14 +16,20 @@
     </head>
     <body>
         <div class="container text-center container-border">
-        <img onclick="location.href='index.html'" src="assets/sadmachine.png" alt="alt"/></img>
+        <img onclick="location.href='index.jsp'" src="assets/sadmachine.png" alt="alt"/></img>
             <c:if test="${!empty msg}">
                 <div class="msg">
                     <h2>${msg}</h2>
                 </div>
             </c:if>
             <p><strong style="color: red;">${pageContext.exception.message}</strong></p>
-            <form action="${pageContext.request.contextPath}/PedidoServlet?action=list" method="post">
+            <form action="<c:if test="${sessionScope.logado}">
+                            ${pageContext.request.contextPath}/PedidoServlet?action=list
+                          </c:if>
+                          <c:if test="${not sessionScope.logado}">
+                              ${pageContext.request.contextPath}/index.jsp
+                          </c:if>"
+                            method="post">
                 <input type="submit" value="Sair" class="btn btn-primary active"/>
             </form>
             <div class="msg">

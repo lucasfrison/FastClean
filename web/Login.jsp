@@ -20,7 +20,7 @@
     </head>
     <body>
         <div class="container text-center" id="center">
-            <img onclick="location.href='index.html'" src="assets/logo.png" alt="alt"/></img>
+            <img onclick="location.href='index.jsp'" src="assets/logo.png" alt="alt"/></img>
             <h1>Login</h1>
             <form action="LoginServlet" method="POST">
                 <div class="form-group"> 

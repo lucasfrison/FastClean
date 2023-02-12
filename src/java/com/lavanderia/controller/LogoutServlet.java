@@ -41,7 +41,7 @@ public class LogoutServlet extends HttpServlet {
             HttpSession session= request.getSession(false);
             if(session!= null) {
                 session.invalidate();
-                response.sendRedirect(request.getContextPath() + "/index.html");
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
             } else {
                 throw new RuntimeException("Erro ao realizar logout, sessão"
                         + "não encontrada!");

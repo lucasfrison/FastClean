@@ -20,7 +20,7 @@
     </head>
     <body>
         <div class="container text-center container-border">
-            <img onclick="location.href='index.html'" src="assets/logo.png" alt="alt"/></img>
+            <img onclick="location.href='index.jsp'" src="assets/logo.png" alt="alt"/></img>
             <legend>Cadastrar</legend>
             <form action="AutoCadastroServlet" method="POST">
                <div class="form-row">
