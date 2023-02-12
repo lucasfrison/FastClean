@@ -24,7 +24,7 @@
         <div style="padding:30px;" class="container text-center container-border">
             <!--<img class="img" onclick="location.href='index.html'" src="assets/logo.png" alt="alt"/></img>-->
             <legend>Manutenção de Funcionários</legend>
-            <form id="frmCadastro" method="post" action=
+            <form id="frmCadastro" accept-charset="ISO-8859-1" method="post" action=
                 "<c:choose>
                     <c:when test="${form.equals('alterar')}">
                         FuncionarioServlet?action=alterar&id=${param.id}
