@@ -59,10 +59,10 @@ public class LoginServlet extends HttpServlet {
 
             RequestDispatcher rd;
             if (usuario.isFuncionario()) {
-                rd = getServletContext().getRequestDispatcher("/ConsultaPedidoFunc");
+                rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 rd.forward(request, response);
             } else {
-                rd = getServletContext().getRequestDispatcher("/ConsultaPedido");
+                rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 rd.forward(request, response);
             }
         } catch (RuntimeException e) {               

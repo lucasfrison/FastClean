@@ -14,6 +14,7 @@
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
             crossorigin="anonymous"></script>
          <script src="js/search.js"></script>
+         <script src="js/statusPedidoColor.js"></script>
          <link rel="stylesheet" href="css/dashboard.css"/>
     </head>
     <body>
