@@ -9,6 +9,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+        </c:if>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manutencão Funcionário</title>
 <!--        <link href="https://bootswatch.com/3/superhero/bootstrap.css" rel="stylesheet">-->

@@ -11,6 +11,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+        </c:if>
         <title>Ver Pedido - FastClean</title>
         <jsp:include page="sources.jsp" /> <%-- HEAD --%>  
         <link href="css/viewRequest.css" type="text/css" rel="stylesheet">

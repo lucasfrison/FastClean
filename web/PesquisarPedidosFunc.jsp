@@ -8,6 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+        </c:if>
         <title>Pesquisa de pedidos</title>
         <jsp:include page="sources.jsp" /> <%-- HEAD --%> 
         <script src="https://code.jquery.com/jquery-3.6.1.js"
