@@ -28,8 +28,9 @@
          <script src="js/dateFilter.js"></script>
          <script src="js/datePicker.js"></script>
          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-         <script src="https://unpkg.com/feather-icons"></script>
-         <script src="js/dashboard.js"></script>
+         <script defer src="https://unpkg.com/feather-icons"></script>
+         <script defer src="js/dashboard.js"></script>
+         <script defer src="js/datePicker.js"></script>
          <link rel="stylesheet" href="css/dashboard.css"/>
     </head>
     <body>
@@ -42,7 +43,6 @@
                         <input 
                             name="pedido" type="text" id="search" class="form-control"
                             placeholder="Pesquisar pedido...">
-                        <button class="btn btn-secondary" type="submit" >Pesquisar</button>
                     </div>
                 </div>
                <c:if test="${not sessionScope.usuario.funcionario}">
@@ -94,9 +94,19 @@
                 </div>
                </c:if>
                <c:if test="${sessionScope.usuario.funcionario}">
-                    <div class="form-group smallTopGap">
-                        <input type='text' name='dataFiltro' value='Período...'>
-                    </div>
+                   <div class="form-group smallTopGap">
+                       <div>
+                        <input class="form-check-input" type="checkbox" name="aa" id="checkHoje">
+                        <label class="form-check-label" for="radioRecolhido">
+                          Hoje
+                        </label>
+                        </div>
+                        <label for="startDate">Data inicial:</label>
+                        <input type="date" id="startDate" name="startDate">
+                        <label for="endDate">Data final:</label>
+                        <input type="date" id="endDate" name="endDate">
+                        <button type="button" id="filter" class="btn btn-secondary">Filtrar</button>
+                   </div> 
                </c:if>
             </form>
         </div>
@@ -118,11 +128,25 @@
                     <c:forEach var="pedido" items="${pedidos}">
                         <tr>
                             <td><a id="link" href="PedidoServlet?action=view&id=${pedido.id}">${pedido.id}</a></td>
-                            <c:if test="${sessionScope.usuario.funcionario}"><th>${pedido.cliente.nome}</th></c:if>
+                            <c:if test="${sessionScope.usuario.funcionario}"><th style="color: grey">${pedido.cliente.nome}</th></c:if>
                             <td><fmt:formatNumber value="${pedido.valorTotal}" type="currency"/></td>
-                            <td><fmt:formatDate value="${pedido.prazo}" dateStyle="short"/></td>
+                            <td><input style="border: 0" type="date" value="${pedido.prazo}" dateStyle="short" disabled/></td>
                             <td class="situacao situacao-<c:out value="${fn:replace(pedido.situacao,'_','')}"/>"><c:out value="${fn:replace(pedido.situacao,'_',' ')}"/></td> 
-                            <td>Pendente</td>
+                            
+                         <c:choose>
+                            <c:when test="${pedido.situacao == 'EM_ABERTO'}">
+                                <td><c:if test="${funcionario}"><a class="sit sit-aberto" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Confirmar Recolhimento</i></span></a></c:if></td> 
+                            </c:when>
+                            <c:when test="${pedido.situacao == 'RECOLHIDO'}">
+                                <td><c:if test="${funcionario}"><a class="sit sit-recolhido" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Confirmar Lavagem</i></span></a></c:if></td>  
+                            </c:when>    
+                            <c:when test="${pedido.situacao == 'AGUARDANDO_PAGAMENTO'}">
+                                <td><c:if test="${!funcionario}"><a class="sit sit-aguardando" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Pagar pedido</span></a></c:if></td>  
+                            </c:when>   
+                            <c:when test="${pedido.situacao == 'PAGO'}">
+                                <td><c:if test="${funcionario}"><a class="sit sit-pago" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Finalizar</i></span></a></c:if></td>  
+                            </c:when>    
+                          </c:choose>
                         </tr>
                     </c:forEach>
                 </tbody>

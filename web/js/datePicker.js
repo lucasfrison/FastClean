@@ -1,25 +1,20 @@
-$(document).on("change", "#datepicker .created_on", function() {
-  var dataVal = $(this).datepicker('getDate');//get date from datepicker
-  dataVal= $.datepicker.formatDate("d/m/y", dataVal);//set format date like in the rows
-  //console.log(dataVal, typeof dataVal);
-  if (dataVal != '') {
-    $("tr:not('#table-header')").hide();//hide all rows
-    //show rows with the same date selected
-    $("label:contains('" +  dataVal + "')").each(function(){
-      $(this).closest('tr').show();
+    $(document).ready(function() {
+      $("#filter").click(function() {
+        let startDate = new Date($("#startDate").val());
+        let endDate = new Date($("#endDate").val());
+        let rowDate;
+        if ($("#checkHoje").is(":checked")) 
+            rowDate = new Date();
+        $("table tbody tr").each(function() {
+          if (!$("#checkHoje").is(":checked")) {
+            rowDate = new Date($(this).find("td:eq(2) input").val());
+          }
+          console.log(rowDate);
+          if (rowDate.getTime() >= startDate.getTime() && rowDate.getTime() <= endDate.getTime()) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
     });
-  }  
-});
-
-(function($) {
-  $('.datepicker').each(function() {
-    $(this).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat: 'dd-mm-yy',
-      onClose: function() {
-        //triggerFocus();
-      }
-    });
-  });
-}(jQuery));
