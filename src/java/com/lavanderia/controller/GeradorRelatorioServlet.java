@@ -80,7 +80,7 @@ public class GeradorRelatorioServlet extends HttpServlet {
                     ops.write(bytes);
                 }
             } else if (action.equals("relatorioPedidos")) {
-                String relatorioReclamacoes = request.getContextPath() + "/Pedidos.jasper";
+                String relatorioReclamacoes = request.getContextPath() + "/ListaPedidos.jasper";
                 URL relatorioPedidosURL = new URL(host + relatorioReclamacoes);
                 HashMap params = new HashMap();
                 byte[] bytes = JasperRunManager.runReportToPdf(relatorioPedidosURL.openStream(), params,
