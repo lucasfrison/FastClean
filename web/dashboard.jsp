@@ -13,6 +13,10 @@
 <!DOCTYPE html>
 <html>
      <head>
+          <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+           </c:if>
         <title>Dashbaord - FastClean</title>
         <jsp:include page="sources.jsp" /> <%-- HEAD --%>  
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

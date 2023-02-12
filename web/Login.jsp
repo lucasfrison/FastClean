@@ -3,10 +3,14 @@
     Created on : 28 de out. de 2022, 15:50:29
     Author     : james
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <c:if test="${!empty sessionScope.logado}" >
+        <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+        <c:redirect url="/dashboard.jsp"/>
+    </c:if>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>

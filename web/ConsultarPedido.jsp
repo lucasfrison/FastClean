@@ -8,6 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+        </c:if>
          <jsp:include page="sources.jsp" /> <%-- HEAD --%>  
          <link rel="stylesheet" href="css/dashboard.css"/>
         <title>Consultar Pedido</title>
