@@ -28,7 +28,8 @@ public class UsuarioDAO {
     private static final String QUERY_LOGIN = "SELECT * FROM tb_usuarios WHERE email_usuario = ? AND senha_usuario = ?";
     private static final String QUERY_INSERT = "INSERT INTO tb_usuarios ( email_usuario, senha_usuario, is_perfil_funcionario, nome_usuario ) VALUES ( ?, ?, ?, ? )";
     private static final String QUERY_REMOVER_USUARIO = "DELETE FROM tb_usuarios WHERE id_usuario = ?";
-
+    private static final String QUERY_ATUALIZAR_USUARIO = "UPDATE tb_usuarios SET email_usuario = ?, senha_usuario = ?, nome_usuario = ? WHERE id_usuario = ?";
+    
     public UsuarioDAO(Connection con) throws DAOException {
         if (con == null)
             throw new DAOException("A conexão passada ao DAO é nula!");
@@ -121,4 +122,26 @@ public class UsuarioDAO {
             throw new DAOException("Erro ao atualizar o funcionário: ", e);
         }
     }
+    
+    public Usuario atualizacao(Usuario usuario) throws DAOException {
+      try (
+            PreparedStatement st = con.prepareStatement(QUERY_ATUALIZAR_USUARIO)
+        ) {
+            String passwordHash = StringUtils.getSha256(usuario.getSenha());
+            
+            st.setString(1, usuario.getEmail());
+            st.setString(2, passwordHash);
+//            st.setBoolean(3, usuario.isFuncionario());
+            st.setString(3, usuario.getNome());
+            st.setInt(4, usuario.getId());
+            
+            st.executeUpdate();
+            
+            return usuario; 
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new DAOException("Ocorreu um erro ao processar a query.", e);
+        } 
+    }
+    
 }

@@ -125,6 +125,13 @@ public class PedidoServlet extends HttpServlet {
             request.setAttribute("pedido", pedido);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/viewRequest.jsp");
             rd.forward(request, response);
+        } else if (action.equals("change")) {
+            int idPedido = Integer.parseInt(request.getParameter("id"));
+            Pedido pedido = PedidoFacade.buscarPedido(idPedido);
+            String situacao = request.getParameter("sit");
+            PedidoFacade.alterarEstadoPedido(pedido, situacao);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/PedidoServlet?action=list");
+            rd.forward(request, response);
         }
     }
 
