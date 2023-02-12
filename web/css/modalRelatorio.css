@@ -1,0 +1,30 @@
+body {
+    background-color: #0080FF;
+}
+
+.container-border{
+ border: 1px solid #081b96;
+ border-radius: 15px;  
+ margin-top: 100px;
+ background-color: darkblue;
+}
+
+#center {
+    width: 20%;
+    margin: 100px auto;
+}
+
+.logo {
+    width: 300px;
+    height: 300px;
+    
+}
+
+img {
+    width: 100%;
+}
+
+.botao{
+   padding: 10px;
+   margin: 10px;
+}

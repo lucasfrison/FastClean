@@ -77,7 +77,7 @@ public class AutoCadastroServlet extends HttpServlet {
                 System.out.println("SENHA: " + cliente.getSenha());
                 System.out.println("------------------------");
                 
-                //AutoCadastroFacade.realizarCadastro(cliente);
+                AutoCadastroFacade.realizarCadastro(cliente);
                 EmailUtil.preparaEmail(cliente.getEmail(), novaSenha);
 
                 if (cliente != null) {
