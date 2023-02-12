@@ -18,7 +18,9 @@
                 </li>
                 <div class="diferente">
                     <li><a href="PedidoServlet?action=list">Dashboard</a></li>
-                    <li><a href="PedidoServlet">Novo Pedido</a></li>
+                    <c:if test="${!sessionScope.funcionario}">
+                        <li><a href="PedidoServlet">Novo Pedido</a></li>
+                    </c:if>
                     <li><a href="PedidoServlet?action=searchAll">Pesquisar Pedido</a></li>
                     <li><a href="ConsultarPedido.jsp">Consultar Pedido</a></li> 
                     <li class="nav-item dropdown dropdown-user">

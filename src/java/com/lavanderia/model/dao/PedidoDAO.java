@@ -29,6 +29,7 @@ public class PedidoDAO implements DAO<Pedido> {
     private final String selectAll = "SELECT * FROM tb_pedidos";
     private final String select = "SELECT * FROM tb_pedidos WHERE id_pedido=?";
     private final String selectEmAberto = "SELECT * FROM tb_pedidos WHERE id_cliente_pedido=? AND estado_pedido='EM_ABERTO'";
+    private final String selectTodosEmAberto = "SELECT * FROM tb_pedidos WHERE estado_pedido='EM_ABERTO'";
     private final String selectIdRoupas = "SELECT * FROM tb_roupas_pedido WHERE id_pedido=?";
     private final String updateEstado = "UPDATE tb_pedidos SET estado_pedido=? WHERE id_pedido=?";
     
@@ -183,6 +184,32 @@ public class PedidoDAO implements DAO<Pedido> {
         try(Connection conn = ConnectionFactory.getConnection(); PreparedStatement pst = conn.prepareStatement(selectEmAberto)) {
             List<Pedido> pedidos = new ArrayList();
             pst.setInt(1,id);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                Pedido p = new Pedido();
+                p.setId(rs.getInt("id_pedido"));
+                p.setPrazo(rs.getDate("prazo_pedido"));
+                p.setValorTotal(rs.getDouble("valor_pedido"));
+                p.setSituacao(EstadoPedido.valueOf(rs.getString("estado_pedido")));
+                List<Roupa> roupas = buscarRoupas(rs.getInt("id_pedido"));
+                p.setRoupas(roupas);
+                ClienteDAO cDao = new ClienteDAO(conn);
+                Cliente c = cDao.buscar(rs.getInt("id_cliente_pedido"));
+                p.setCliente(c);
+                pedidos.add(p);
+            }
+            return pedidos;   
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Pedido> buscarTodosEmAberto() throws DAOException {
+       try(Connection conn = ConnectionFactory.getConnection(); PreparedStatement pst = conn.prepareStatement(selectTodosEmAberto)) {
+            List<Pedido> pedidos = new ArrayList();
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
                 Pedido p = new Pedido();

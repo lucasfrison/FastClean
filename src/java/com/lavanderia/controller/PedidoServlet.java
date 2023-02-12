@@ -118,15 +118,14 @@ public class PedidoServlet extends HttpServlet {
                 PedidoFacade.inserirPedido(pedido);
 
                 // Redireciona pagina de pedidos, editar...
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/PedidoServlet?action=list");
-                rd.forward(request, response);
+                response.sendRedirect("PedidoServlet?action=list");
             } catch (BuscarRoupaException | InserirPedidoException | RuntimeException e) {
                 request.setAttribute("mensagem", "ERRO: " + e.getMessage());
                 RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp");
                 rd.forward(request, response);
             }
         } else if (action.equals("list") && isFuncionario) {
-            List<Pedido> pedidos = PedidoFacade.buscarPedidos();
+            List<Pedido> pedidos = PedidoFacade.buscarTodosPedidosEmAberto();
             request.setAttribute("pedidos", pedidos);
             request.setAttribute("funcionario", isFuncionario);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard.jsp");

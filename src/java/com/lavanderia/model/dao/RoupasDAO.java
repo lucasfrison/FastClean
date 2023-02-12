@@ -106,9 +106,9 @@ public class RoupasDAO implements DAO {
         try ( Connection conn = ConnectionFactory.getConnection();  PreparedStatement pst = conn.prepareStatement(delete)) {
             pst.setInt(1, id);
             pst.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException ex) {
+            throw new DAOException("Erro ao excluir roupa", ex);
+        } 
     }
 
 }
