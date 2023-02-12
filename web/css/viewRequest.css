@@ -69,3 +69,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .breadcrumb-item+.breadcrumb-item::before {
     color: #ADD8E6;
 }
+
+.situacao {
+    font-weight: bolder;
+}
+
+.situacao-REJEITADO, .situacao-CANCELADO {
+    color: red;
+}
+
+.situacao-EMABERTO {
+    color: yellow;
+}
+
+.situacao-RECOLHIDO {
+    color: gray;
+}
+
+.situacao-AGUARDANDOPAGAMENTO {
+    color: blue;
+}
+
+.situacao-PAGO {
+    color: orange;
+}
+
+.situacao-FINALIZADO {
+    color: green;
+}
