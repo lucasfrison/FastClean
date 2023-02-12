@@ -9,7 +9,7 @@
 <header class="container-fluid shadow-sm mb-5">
         <nav>
             <ul class="nav-links">
-                <li class="link-esq"><a href="dashboard.jsp">Fastclean</a></li>
+                <li class="link-esq"><a href="PedidoServlet?action=list">Fastclean</a></li>
                 <li class="mobile">
                     <div class="l1"></div>
                     <div class="l2"></div>
@@ -19,6 +19,7 @@
                     <li><a href="PedidoServlet?action=list">Dashboard</a></li>
                     <li><a href="PedidoServlet">Novo Pedido</a></li>
                     <li><a href="PesquisarPedidos.jsp">Pesquisar Pedido</a></li>
+                    <li><a href="ConsultarPedido.jsp">Consultar Pedido</a></li> 
                     <li class="nav-item dropdown dropdown-user">
                         <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user-nav d-sm-flex d-none"></div><span class="avatar">Administrador</span>
@@ -34,7 +35,7 @@
                         </div>
                     </li>
                 </div>
-                <li class="link-dir"><a href="index.html">Sair</a></li>
+                <li class="link-dir"><a href="LogoutServlet">Sair</a></li>
             </ul>
         </nav>
 </header>

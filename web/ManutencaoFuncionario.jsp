@@ -9,6 +9,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+        </c:if>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manutencão Funcionário</title>
 <!--        <link href="https://bootswatch.com/3/superhero/bootstrap.css" rel="stylesheet">-->
@@ -24,7 +28,7 @@
         <div style="padding:30px;" class="container text-center container-border">
             <!--<img class="img" onclick="location.href='index.html'" src="assets/logo.png" alt="alt"/></img>-->
             <legend>Manutenção de Funcionários</legend>
-            <form id="frmCadastro" method="post" action=
+            <form id="frmCadastro" accept-charset="ISO-8859-1" method="post" action=
                 "<c:choose>
                     <c:when test="${form.equals('alterar')}">
                         FuncionarioServlet?action=alterar&id=${param.id}

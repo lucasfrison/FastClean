@@ -9,6 +9,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+        </c:if>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="sources.jsp" />
         <link href="css/manRoupas.css" type="text/css" rel="stylesheet">

@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -56,13 +57,19 @@ public class LoginServlet extends HttpServlet {
             if (usuario.isEmpty()) {
                 throw new RuntimeException("Credenciais incorretas");
             }
+            
+            HttpSession session = request.getSession(true);
+            session.setAttribute("usuario",  usuario);
+            session.setAttribute("logado",  true);
 
             RequestDispatcher rd;
             if (usuario.isFuncionario()) {
-                rd = getServletContext().getRequestDispatcher("/ConsultaPedidoFunc");
+                session.setAttribute("funcionario", true);
+                rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 rd.forward(request, response);
             } else {
-                rd = getServletContext().getRequestDispatcher("/ConsultaPedido");
+                session.setAttribute("funcionario", false);
+                rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 rd.forward(request, response);
             }
         } catch (RuntimeException e) {               
@@ -71,19 +78,6 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
             throw new RuntimeException("Erro ao realizar cadastro!", e);
         }
-            
-            
-//            
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet LoginServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

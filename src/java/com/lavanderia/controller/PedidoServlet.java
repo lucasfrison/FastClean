@@ -12,6 +12,7 @@ import com.lavanderia.model.beans.EstadoPedido;
 import com.lavanderia.model.beans.Pedido;
 import com.lavanderia.model.beans.Roupa;
 import com.lavanderia.model.beans.Cliente;
+import com.lavanderia.model.dao.DAOException;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -50,7 +51,8 @@ public class PedidoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String action = request.getParameter("action");
-        
+        boolean isFuncionario = false;
+
         if (action == null) {
             List<Roupa> lista = RoupasFacade.buscarRoupas();
             request.setAttribute("roupas", lista);
@@ -80,8 +82,7 @@ public class PedidoServlet extends HttpServlet {
                 try {
                     c.setTime(f.parse(df.format(date)));
                     c.add(Calendar.DATE, roupaPrazo);
-                }
-                catch(ParseException e) {
+                } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -90,10 +91,10 @@ public class PedidoServlet extends HttpServlet {
                 EstadoPedido estado = null;
                 if (action.equals("new")) {
                     estado = EstadoPedido.EM_ABERTO;
-                } else if (action.equals("canceal")){
+                } else if (action.equals("canceal")) {
                     estado = EstadoPedido.REJEITADO;
                 }
-               
+
                 Pedido pedido = new Pedido();
                 pedido.setPrazo(date);
                 pedido.setValorTotal(valorTotal);
@@ -104,19 +105,26 @@ public class PedidoServlet extends HttpServlet {
                 cliente.setId(1);
                 pedido.setCliente(cliente);
                 PedidoFacade.inserirPedido(pedido);
-                
+
                 // Redireciona pagina de pedidos, editar...
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/PesquisarPedidos.jsp");
                 rd.forward(request, response);
-            }
-            catch (BuscarRoupaException | InserirPedidoException | RuntimeException e) {
+            } catch (BuscarRoupaException | InserirPedidoException | RuntimeException e) {
                 request.setAttribute("mensagem", "ERRO: " + e.getMessage());
                 RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp");
                 rd.forward(request, response);
             }
-        } else if (action.equals("list")) {
+        } else if (action.equals("list") && isFuncionario) {
             List<Pedido> pedidos = PedidoFacade.buscarPedidos();
             request.setAttribute("pedidos", pedidos);
+            request.setAttribute("funcionario", isFuncionario);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
+            rd.forward(request, response);
+        } else if (action.equals("list") && !isFuncionario) {
+            int idCliente = 1;
+            List<Pedido> pedidos = PedidoFacade.buscarPedidosEmAberto(idCliente);
+            request.setAttribute("pedidos", pedidos);
+            request.setAttribute("funcionario", isFuncionario);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
             rd.forward(request, response);
         } else if (action.equals("view")) {
@@ -124,6 +132,13 @@ public class PedidoServlet extends HttpServlet {
             Pedido pedido = PedidoFacade.buscarPedido(idPedido);
             request.setAttribute("pedido", pedido);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/viewRequest.jsp");
+            rd.forward(request, response);
+        } else if (action.equals("change")) {
+            int idPedido = Integer.parseInt(request.getParameter("id"));
+            Pedido pedido = PedidoFacade.buscarPedido(idPedido);
+            String situacao = request.getParameter("sit");
+            PedidoFacade.alterarEstadoPedido(pedido, situacao);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/PedidoServlet?action=list");
             rd.forward(request, response);
         }
     }

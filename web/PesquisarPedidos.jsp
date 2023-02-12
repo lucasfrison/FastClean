@@ -8,12 +8,17 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:if test="${empty sessionScope.logado}" >
+            <c:set var="mensagem" value="Precisa fazer o login" scope="request"/>
+            <c:redirect url="/Login.jsp"/>
+        </c:if>
         <title>Pesquisa de pedidos</title>
          <jsp:include page="sources.jsp" /> <%-- HEAD --%> 
          <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
             crossorigin="anonymous"></script>
          <script src="js/search.js"></script>
+         <script src="js/statusPedidoColor.js"></script>
          <link rel="stylesheet" href="css/dashboard.css"/>
     </head>
     <body>
