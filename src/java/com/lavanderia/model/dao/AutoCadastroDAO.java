@@ -5,12 +5,10 @@
 package com.lavanderia.model.dao;
 
 import com.lavanderia.model.beans.Cliente;
-import com.lavanderia.utils.DateUtils;
+import com.lavanderia.model.beans.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  *
@@ -35,39 +33,48 @@ public class AutoCadastroDAO {
     }
     
     public void inserir(Cliente cliente) throws com.lavanderia.exceptions.DAOException {
-        try (PreparedStatement stUsuario = 
-                con.prepareStatement(QUERY_REALIZAR_CADASTRO_USUARIO, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement stCliente = con.prepareStatement(QUERY_REALIZAR_CADASTRO_CLIENTE)) 
-        {
+        // LUCAS: modificar para usar ClienteDAO para inserir
+        // nesse metodo: iniciar a transaction, usar as devidas DAOS para inserir
+        // ou fazer na Facade
+        
+        try (
+             PreparedStatement stCliente = con.prepareStatement(QUERY_REALIZAR_CADASTRO_CLIENTE)
+        ) {
             con.setAutoCommit(false);
-            stUsuario.setString(1, cliente.getEmail());
-            stUsuario.setString(2, cliente.getSenha());
-            stUsuario.setBoolean(3, false);
-            stUsuario.setString(4, cliente.getNome());
-            stUsuario.executeUpdate();
-            ResultSet rs = stUsuario.getGeneratedKeys(); 
-            if (rs.next()){                  
-                stCliente.setInt(1, rs.getInt(1));
-                stCliente.setString(2, cliente.getCpf());
-                stCliente.setString(3, cliente.getTelefone());
-                stCliente.setString(4, cliente.getEndereco().getBairro());
-                stCliente.setInt(5, cliente.getEndereco().getCidade().getId());
-                stCliente.setInt(6, cliente.getEndereco().getEstado().getId());
-                stCliente.setInt(7, cliente.getEndereco().getNumero());
-                stCliente.setString(8, cliente.getEndereco().getRua());
-                stCliente.setString(9, cliente.getEndereco().getCep());
-            }
+            
+            Usuario usuario = new Usuario();
+            
+            usuario.setEmail(cliente.getEmail());
+            usuario.setSenha(cliente.getSenha());
+            usuario.setFuncionario(false);
+            usuario.setNome(cliente.getNome());
+            
+            usuario = (new UsuarioDAO(con)).insert(usuario);
+            
+            stCliente.setInt(1, usuario.getId());
+            stCliente.setString(2, cliente.getCpf());
+            stCliente.setString(3, cliente.getTelefone());
+            stCliente.setString(4, cliente.getEndereco().getBairro());
+            stCliente.setInt(5, cliente.getEndereco().getCidade().getId());
+            stCliente.setInt(6, cliente.getEndereco().getEstado().getId());
+            stCliente.setInt(7, cliente.getEndereco().getNumero());
+            stCliente.setString(8, cliente.getEndereco().getRua());
+            stCliente.setString(9, cliente.getEndereco().getCep());
+                
             stCliente.executeUpdate();
             
             con.commit();
             con.setAutoCommit(true);
+            
+            // fazer tratamento para CPF duplciado
         } catch (SQLException e) {
             try {
                 con.rollback();
             } catch (SQLException ex) {
-                throw new com.lavanderia.exceptions.DAOException("Erro ao realizar cadastro: ", ex);
+                throw new com.lavanderia.exceptions.DAOException("Erro ao realizar cadastro: " + e.getMessage(), ex);
             }
-            throw new com.lavanderia.exceptions.DAOException("Erro ao realizar cadastro: ", e);
+            
+            throw new com.lavanderia.exceptions.DAOException("Erro ao realizar cadastro: " + e.getMessage(), e);
         } 
     }
 }

@@ -10,15 +10,20 @@ import java.io.Serializable;
  *
  * @author lucfg
  */
-public abstract class Usuario implements Serializable {
+public class Usuario implements Serializable {
     
-    private int id;
+    private int id = -1;
     private String email;
     private String nome;
     private String senha;
     private boolean funcionario;
 
     public Usuario() {
+    }
+    
+    public Usuario(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
     }
 
     public int getId() {
@@ -61,4 +66,7 @@ public abstract class Usuario implements Serializable {
         this.funcionario = funcionario;
     }
   
+    public boolean isEmpty() {
+        return this.id == -1;
+    }
 }

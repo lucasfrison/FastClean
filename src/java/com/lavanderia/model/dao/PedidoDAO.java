@@ -61,7 +61,6 @@ public class PedidoDAO implements DAO<Pedido> {
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
-        
     }
 
     @Override

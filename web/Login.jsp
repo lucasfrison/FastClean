@@ -18,7 +18,7 @@
         <div class="container text-center" id="center">
             <img onclick="location.href='index.html'" src="assets/logo.png" alt="alt"/></img>
             <h1>Login</h1>
-            <form action="dashboard.jsp" method="POST">
+            <form action="LoginServlet" method="POST">
                 <div class="form-group"> 
                     <label>Usuário</label>
                     <input name="usuario" type="text" class="form-control" id="inputUsuario" placeholder="Usuario" required>

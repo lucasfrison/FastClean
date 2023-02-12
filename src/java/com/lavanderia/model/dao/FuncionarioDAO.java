@@ -6,6 +6,7 @@ package com.lavanderia.model.dao;
 
 import com.lavanderia.exceptions.DAOException;
 import com.lavanderia.model.beans.Funcionario;
+import com.lavanderia.model.beans.Usuario;
 import com.lavanderia.utils.DateUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,10 +24,6 @@ public class FuncionarioDAO implements DAO<Funcionario> {
     
     private Connection con;
     
-    private final String QUERY_INSERIR_USUARIO = 
-            "INSERT INTO tb_usuarios(email_usuario, senha_usuario, " + 
-            "is_perfil_funcionario, nome_usuario) " +
-            "VALUES (?, ?, ?, ?)";
     private final String QUERY_INSERIR_FUNCIONARIO = 
             "INSERT INTO tb_funcionarios(id_funcionario, nasc_funcionario) " +
             "VALUES (?, ?)";
@@ -95,22 +92,27 @@ public class FuncionarioDAO implements DAO<Funcionario> {
 
     @Override
     public void inserir(Funcionario func) throws DAOException {
-        try (PreparedStatement stUsuario = 
-                con.prepareStatement(QUERY_INSERIR_USUARIO, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement stFuncionario = con.prepareStatement(QUERY_INSERIR_FUNCIONARIO)) 
+        try (
+            PreparedStatement stFuncionario = con.prepareStatement(QUERY_INSERIR_FUNCIONARIO))
         {
             con.setAutoCommit(false);
-            stUsuario.setString(1, func.getEmail());
-            stUsuario.setString(2, func.getSenha());
-            stUsuario.setBoolean(3, true);
-            stUsuario.setString(4, func.getNome());
-            stUsuario.executeUpdate();
-            ResultSet rs = stUsuario.getGeneratedKeys(); 
-            if (rs.next())
-                stFuncionario.setInt(1, rs.getInt(1));
+            
+            Usuario usuario = new Usuario();
+            
+            usuario.setEmail(func.getEmail());
+            usuario.setSenha(func.getSenha());
+            usuario.setNome(func.getNome());
+            usuario.setFuncionario(true);
+            
+            UsuarioDAO usuarioDAO = new UsuarioDAO(con);
+            usuario = usuarioDAO.insert(usuario);
+            
+            stFuncionario.setInt(1, usuario.getId());
             stFuncionario.setDate(2, DateUtils.
                     javaDateToSQLDate(func.getDataNascimento()));
+            
             stFuncionario.executeUpdate();
+            
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
@@ -130,6 +132,7 @@ public class FuncionarioDAO implements DAO<Funcionario> {
              PreparedStatement stFuncionario = con.prepareStatement(QUERY_ATUALIZAR_FUNCIONARIO)) 
         {
             con.setAutoCommit(false);
+            // LUCAS: modificar para utilizar o UsuarioDAO
             stUsuario.setString(1, func.getEmail());
             stUsuario.setString(2, func.getSenha());
             stUsuario.setString(3, func.getNome());
@@ -153,15 +156,13 @@ public class FuncionarioDAO implements DAO<Funcionario> {
 
     @Override
     public void remover(int id) throws DAOException {
-        try (PreparedStatement stFuncionario = 
-                con.prepareStatement(QUERY_REMOVER_FUNCIONARIO);
-             PreparedStatement stUsuario = con.prepareStatement(QUERY_REMOVER_USUARIO)) 
-        {
+        try (PreparedStatement stFuncionario = con.prepareStatement(QUERY_REMOVER_FUNCIONARIO)) {
             con.setAutoCommit(false);
             stFuncionario.setInt(1, id);
             stFuncionario.executeUpdate();
-            stUsuario.setInt(1, id);
-            stUsuario.executeUpdate();
+            
+            (new UsuarioDAO(con)).delete(id);
+            
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
