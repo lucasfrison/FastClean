@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('form input').blur(function(){
+    $('form input').submit(function(){
         $(this).removeClass("error");
         let errorName = "erro"+$(this).attr("name");
         if(!$(this).val()){
