@@ -14,7 +14,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp" /> <%-- HEADER --%>   
-        <div class="container text-light mt-5">
+        <div class="container text-light mt-5"> 
             <form method="post" action="PedidoServlet?action=view">
             <div class="form-group smallTopGap">
                 <label for="pedido"><h3>Pesquisar pedido</h3></label>
