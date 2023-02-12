@@ -61,13 +61,19 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("usuario",  usuario);
             session.setAttribute("logado",  true);
-
+            
+            RequestDispatcher rd;
+            
             if (usuario.isFuncionario()) {
                 session.setAttribute("funcionario", true);
+                rd = getServletContext().getRequestDispatcher("/PedidoServlet?action=list");
+                rd.forward(request, response);
             } else {
                 session.setAttribute("funcionario", false);
+                rd = getServletContext().getRequestDispatcher("/PedidoServlet?action=list");
+                rd.forward(request, response);
             }
-            response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
+//            
 
         } catch (RuntimeException e) {               
             request.setAttribute("msg", "ERRO: " + e.getMessage());
