@@ -22,6 +22,7 @@
         <!--<link href="css/main.css" type="text/css" rel="stylesheet">-->
         <jsp:include page="sources.jsp" /> <%-- HEAD --%>  
         <script src="js/validarFormText.js"></script>
+        <script defer src="js/excluirFuncionario.js"></script>
     </head>
         <jsp:include page="header.jsp" /> <%-- HEADER --%>
     <body>
@@ -82,7 +83,7 @@
                             <td>
                                 <a style="width: 8rem;" class="btn btn-success" 
                                    href="FuncionarioServlet?action=formAlterar&id=${funcionario.id}">Editar</a>
-                                <a style="width: 8rem;" class="btn btn-danger" 
+                                <a style="width: 8rem;" class="btn btn-danger" id="acao-excluir" 
                                    href="FuncionarioServlet?action=remover&id=${funcionario.id}">Excluir</a>
                             </td>
                         </tr>
