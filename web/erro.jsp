@@ -22,7 +22,7 @@
                 </div>
             </c:if>
             <p><strong style="color: red;">${pageContext.exception.message}</strong></p>
-            <form action="${pageContext.request.contextPath}/dashboard.jsp" method="post">
+            <form action="${pageContext.request.contextPath}/PedidoServlet?action=list" method="post">
                 <input type="submit" value="Sair" class="btn btn-primary active"/>
             </form>
             <div class="msg">

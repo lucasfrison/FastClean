@@ -25,7 +25,7 @@
         <main class="container text-light mt-5">
             <div class="row">
                 <div class="col-xs-7 col-sm-7 col-md-10 col-lg-10">
-                    <h1>Pedido < identificador ></h1>
+                    <h1>Pedido <c:out value="${pedido.id}"/></h1>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
                             <li id="bread" class="breadcrumb-item"><a id="bread" href="PedidoServlet?action=list">Painel Principal</a>
@@ -50,12 +50,9 @@
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                     <div class="card">
                         <h1 id="text">Detalhes do Pedido</h1>
-                        <p id="text" style="margin-top:10px;">Data de abertura: 10/10/2022</p>
-                        <br>
-                        <h5 id="text">Roupas: <strong><c:forEach var="roupa" items="${pedido.roupas}">${roupa.nome} </c:forEach></strong></h5>
-                        <br>
+                        <h5 class="mt-4" id="text" style="margin-top:10px;">Quantidade de peças: <c:out value="${fn:length(pedido.roupas)}"/></h5>
+                        <h5 id="text">Roupa(s): <strong><c:forEach var="roupa" items="${pedido.roupas}">${roupa.nome} </c:forEach></strong></h5>
                         <h5 id="text">Data limite de entrega: <strong><fmt:formatDate value="${pedido.prazo}" dateStyle="short"/></strong></h5>
-                        <br>
                         <h5 id="text">Status: <strong class="situacao situacao-${fn:replace(pedido.situacao,'_','')}"><c:out value="${fn:replace(pedido.situacao,'_',' ')}"/></strong></h5>
                     </div>
                 </div>

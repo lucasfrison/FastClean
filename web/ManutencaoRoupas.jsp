@@ -26,14 +26,6 @@
             <h1 style="text-transform: uppercase;" class="text-center text-light">Roupas Cadastradas</h1>
             <div class="bg-nova-peca p-3 d-flex gap-3 justify-content-between mt-5">
                 <a href="<c:url value="RoupasServlet?action=incluirform"/>" role="button" class="btn nova-peca">Nova Peça</a>
-                <div>
-                    <div class="input-group">
-                        <input 
-                            name="pedido" type="text" id="search" class="form-control"
-                            placeholder="Pesquisar roupa...">
-                        <button class="btn btn-pesquisar" type="submit" >Pesquisar</button>
-                    </div>
-                </div>
             </div>
             <table class="mt-4">
                 <thead>
