@@ -60,6 +60,8 @@ public class PedidoDAO implements DAO<Pedido> {
             throw new RuntimeException(e);
         }
         */
+        Pedido pedido = new Pedido();
+        return pedido;
     }
 
     @Override
