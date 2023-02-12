@@ -47,5 +47,26 @@ public class PedidoFacade {
             throw new RuntimeException(e);
         }
     }
+
+    public static void alterarEstadoPedido(Pedido pedido, String situacao) {
+        try {
+            switch (situacao) {
+                case "aberto":
+                    pDao.alterarEstadoPedido(pedido, "RECOLHIDO");
+                    break;
+                case "recolhido":
+                    pDao.alterarEstadoPedido(pedido, "AGUARDANDO_PAGAMENTO");
+                    break;
+                case "pago":
+                    pDao.alterarEstadoPedido(pedido, "FINALIZADO");
+                    break;
+                default:
+                    throw new DAOException();
+            }
+        }
+        catch(DAOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     
 }

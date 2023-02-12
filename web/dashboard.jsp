@@ -4,6 +4,8 @@
     Author     : PC_Perussi
 --%>
 
+
+<%@page import="com.lavanderia.model.beans.EstadoPedido" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,6 +19,7 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/feather-icons"></script>
+        <script defer src="js/dashboard.js"></script>
         <link href="css/dashboard.css" type="text/css" rel="stylesheet">
     </head>
     <body>
@@ -56,7 +59,26 @@
                         <td><fmt:formatNumber value="${pedido.valorTotal}" type="currency"/></td>
                         <td><c:out value="${fn:length(pedido.roupas)}"/></td>
                         <td class="situacao situacao-<c:out value="${fn:replace(pedido.situacao,'_','')}"/>"><c:out value="${fn:replace(pedido.situacao,'_',' ')}"/></td>
-                        <td><a class="confirma" data-code="1"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='loader'></i></span></a></td>  
+                        <c:choose>
+                            <c:when test="${pedido.situacao == 'EM_ABERTO'}">
+                                <td><a class="sit sit-aberto" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='loader'></i></span></a></td>  
+                            </c:when>
+                            <c:when test="${pedido.situacao == 'REJEITADO' || pedido.situacao == 'CANCELADO'}">
+                                <td><a class="sit sit-rejeitado" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='x-octagon'></i></span></a></td>  
+                            </c:when>
+                            <c:when test="${pedido.situacao == 'RECOLHIDO'}">
+                                <td><a class="sit sit-recolhido" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='truck'></i></span></a></td>  
+                            </c:when>    
+                            <c:when test="${pedido.situacao == 'AGUARDANDO_PAGAMENTO'}">
+                                <td><a class="sit sit-aguardando" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='credit-card'></i></span></a></td>  
+                            </c:when>   
+                            <c:when test="${pedido.situacao == 'PAGO'}">
+                                <td><a class="sit sit-pago" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='dollar-sign'></i></span></a></td>  
+                            </c:when> 
+                            <c:when test="${pedido.situacao == 'FINALIZADO'}">
+                                <td><a class="sit sit-finalizado" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='check'></i></span></a></td>  
+                            </c:when>     
+                        </c:choose>
                     </tr>
                 </c:forEach>
               <!-- 

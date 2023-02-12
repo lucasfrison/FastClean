@@ -29,6 +29,7 @@ public class PedidoDAO implements DAO<Pedido> {
     private final String selectAll = "SELECT * FROM tb_pedidos";
     private final String select = "SELECT * FROM tb_pedidos WHERE id_pedido=?";
     private final String selectIdRoupas = "SELECT * FROM tb_roupas_pedido WHERE id_pedido=?";
+    private final String updateEstado = "UPDATE tb_pedidos SET estado_pedido=? WHERE id_pedido=?";
     
     
     private static RoupasDAO rDao = new RoupasDAO();
@@ -159,6 +160,19 @@ public class PedidoDAO implements DAO<Pedido> {
                 roupas.add(r);
             }
             return roupas; 
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void alterarEstadoPedido(Pedido pedido, String estado) {
+        try(Connection conn = ConnectionFactory.getConnection(); PreparedStatement pst = conn.prepareStatement(updateEstado)) {
+            pst.setString(1, estado);
+            pst.setInt(2,pedido.getId());
+            pst.executeUpdate();
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
