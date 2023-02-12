@@ -46,10 +46,7 @@ public class FuncionarioDAO implements DAO<Funcionario> {
     
     private final String QUERY_REMOVER_FUNCIONARIO =
             "DELETE FROM tb_funcionarios WHERE id_funcionario = ?";
-    
-    private final String QUERY_REMOVER_USUARIO =
-            "DELETE FROM tb_usuarios WHERE id_usuario = ?";
-    
+ 
     private final String QUERY_BUSCAR_TODOS =
             "SELECT id_usuario, email_usuario, senha_usuario, " +
             "is_perfil_funcionario, nome_usuario, nasc_funcionario " +

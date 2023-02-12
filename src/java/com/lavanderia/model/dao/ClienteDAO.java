@@ -13,6 +13,7 @@ import com.lavanderia.model.beans.Cidade;
 import com.lavanderia.model.beans.Cliente;
 import com.lavanderia.model.beans.Endereco;
 import com.lavanderia.model.beans.UF;
+import com.lavanderia.model.beans.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,6 @@ public class ClienteDAO implements DAO<Cliente> {
     private static final String QUERY_SELECT_CLIENTES="SELECT * FROM tb_clientes JOIN tb_usuarios ON tb_usuarios.id_cliente = tb_usuarios.id_usuario";
     private static final String QUERY_REMOVER_CLIENTE ="DELETE FROM tb_clientes WHERE id_cliente = ?";
     private static final String QUERY_REMOVER_USUARIO ="DELETE FROM tb_usuarios WHERE id_usuario = ?";
-    private final String QUERY_ATUALIZAR_USUARIO ="UPDATE tb_usuarios SET email_usuario = ?, senha_usuario = ?, nome_usuario = ? WHERE id_usuario = ?";
     private final String QUERY_ATUALIZAR_CLIENTE = "UPDATE tb_clientes SET cpf_cliente = ?, fone_cliente = ?, bairro_cliente = ?, id_cidade_cliente = ?, id_estado_cliente = ?, numero_cliente = ? , rua_cliente = ?  WHERE id_cliente = ?";
 
     
@@ -68,6 +68,7 @@ public class ClienteDAO implements DAO<Cliente> {
         cli.setFuncionario(rs.getBoolean("is_perfil_funcionario"));
         cli.setCpf(rs.getString("cpf_cliente"));
         cli.setTelefone(rs.getString("fone_cliente"));
+        
         Endereco endereco = new Endereco();
         try {
             UF estado = EstadoFacade.buscarPorId(rs.getInt("id_estado_cliente"));
@@ -111,17 +112,21 @@ public class ClienteDAO implements DAO<Cliente> {
 
     @Override
     public void atualizar(Cliente cli) throws DAOException {
-    try (PreparedStatement stUsuario = 
-                con.prepareStatement(QUERY_ATUALIZAR_USUARIO);
-             PreparedStatement stCliente = con.prepareStatement(QUERY_ATUALIZAR_CLIENTE)) 
-        {
+    try (
+            PreparedStatement stCliente = con.prepareStatement(QUERY_ATUALIZAR_CLIENTE)
+        ) {
             con.setAutoCommit(false);
-            // LUCAS: modificar para usar UsuarioDAO
-            stUsuario.setString(1, cli.getEmail());
-            stUsuario.setString(2, cli.getSenha());
-            stUsuario.setString(3, cli.getNome());
-            stUsuario.setInt(4, cli.getId());
-            stUsuario.executeUpdate();          
+            
+            Usuario usuario = new Usuario();
+            
+            usuario.setId(cli.getId());
+            usuario.setEmail(cli.getEmail());
+            usuario.setSenha(cli.getSenha());
+            usuario.setNome(cli.getNome());
+            usuario.setFuncionario(false);
+            
+            (new UsuarioDAO(con)).atualizar(usuario);
+    
             stCliente.setString(1, cli.getCpf());
             stCliente.setString(2, cli.getTelefone());
             stCliente.setString(3, cli.getEndereco().getBairro());
@@ -131,6 +136,7 @@ public class ClienteDAO implements DAO<Cliente> {
             stCliente.setString(7, cli.getEndereco().getRua());
             stCliente.setInt(8, cli.getId());
             stCliente.executeUpdate();
+            
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
@@ -138,7 +144,7 @@ public class ClienteDAO implements DAO<Cliente> {
                 con.rollback();
             } catch (SQLException ex) {
                 throw new DAOException("Erro ao atualizar o cliente: ", ex);
-            }
+}
             throw new DAOException("Erro ao atualizar o cliente: ", e);
         }
     }

@@ -123,7 +123,7 @@ public class UsuarioDAO {
         }
     }
     
-    public Usuario atualizacao(Usuario usuario) throws DAOException {
+    public Usuario atualizar(Usuario usuario) throws DAOException {
       try (
             PreparedStatement st = con.prepareStatement(QUERY_ATUALIZAR_USUARIO)
         ) {
