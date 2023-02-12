@@ -89,7 +89,7 @@ public class FuncionarioServlet extends HttpServlet {
         try {
             func.setNome(request.getParameter("nome"));
             func.setEmail(request.getParameter("email"));
-            func.setSenha(StringUtils.getSha256(request.getParameter("senha")));
+            func.setSenha(request.getParameter("senha"));
             String dataNasc = request.getParameter("dataNasc");
             Date dataNascFmt = DateUtils.stringToJavaDate(dataNasc);
             func.setDataNascimento(dataNascFmt);

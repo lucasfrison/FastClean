@@ -66,11 +66,16 @@ public class AutoCadastroServlet extends HttpServlet {
                 cliente.setTelefone(request.getParameter("telefone").replace("(", "").replace(")", "").replace("-", ""));
                 
                 // cria nova senha e criptografa
-                String novaSenha = StringUtils.gerarSenha();         
-                cliente.setSenha(StringUtils.getSha256(novaSenha));
+                String novaSenha = StringUtils.gerarSenha();
+                cliente.setSenha(novaSenha);
                 
                 cliente.setCpf(request.getParameter("cpf").replace(".", "").replace("-", ""));         
                 cliente.setEmail(request.getParameter("email"));
+                
+                System.out.println("------------------------");
+                System.out.println("EMAIL: " + cliente.getEmail());
+                System.out.println("SENHA: " + cliente.getSenha());
+                System.out.println("------------------------");
                 
                 AutoCadastroFacade.realizarCadastro(cliente);
                 EmailUtil.preparaEmail(cliente.getEmail(), novaSenha);
