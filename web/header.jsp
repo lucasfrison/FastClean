@@ -18,7 +18,7 @@
                 <div class="diferente">
                     <li><a href="PedidoServlet?action=list">Dashboard</a></li>
                     <li><a href="PedidoServlet">Novo Pedido</a></li>
-                    <li><a href="PesquisarPedidos.jsp">Pesquisar Pedido</a></li>
+                    <li><a href="PedidoServlet?action=searchAll">Pesquisar Pedido</a></li>
                     <li><a href="ConsultarPedido.jsp">Consultar Pedido</a></li> 
                     <li class="nav-item dropdown dropdown-user">
                         <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

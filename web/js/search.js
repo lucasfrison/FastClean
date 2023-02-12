@@ -15,7 +15,7 @@ $(function () {
         $("tbody tr").each(function(){
             
             text = $(this).text().toLowerCase();
-            trText = $(this).find('td:last-child').text().toLowerCase();
+            trText = $(this).text().toLowerCase();
             console.log(radioFilter === trText);
             
             if(trText.indexOf(radioFilter) != -1 || radioFilter === semFiltro) {
