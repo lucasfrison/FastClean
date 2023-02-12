@@ -3,6 +3,7 @@
     Created on : 5 de nov. de 2022, 17:11:11
     Author     : lucfg
 --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
