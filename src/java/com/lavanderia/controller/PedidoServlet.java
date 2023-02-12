@@ -6,13 +6,14 @@ package com.lavanderia.controller;
 
 import com.lavanderia.exceptions.BuscarRoupaException;
 import com.lavanderia.exceptions.InserirPedidoException;
+import com.lavanderia.facade.ClienteFacade;
 import com.lavanderia.facade.PedidoFacade;
 import com.lavanderia.facade.RoupasFacade;
 import com.lavanderia.model.beans.EstadoPedido;
 import com.lavanderia.model.beans.Pedido;
 import com.lavanderia.model.beans.Roupa;
 import com.lavanderia.model.beans.Cliente;
-import com.lavanderia.model.dao.DAOException;
+import com.lavanderia.model.beans.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -20,6 +21,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.text.DateFormat;
 import static java.text.DateFormat.SHORT;
 import java.text.ParseException;
@@ -50,9 +52,19 @@ public class PedidoServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String action = request.getParameter("action");
-        boolean isFuncionario = false;
+        HttpSession session = request.getSession();
+        
+        boolean logado = (boolean)session.getAttribute("logado");
+        
+        if (!logado) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Login.jsp");
+            request.setAttribute("msg", "Usuário deve se autenticar para acessar o sistema.");
+            rd.forward(request, response);
+        }
 
+        boolean isFuncionario = (boolean)session.getAttribute("funcionario");
+        Usuario usuario = (Usuario)session.getAttribute("usuario");
+        String action = request.getParameter("action");
         if (action == null) {
             List<Roupa> lista = RoupasFacade.buscarRoupas();
             request.setAttribute("roupas", lista);
@@ -100,14 +112,13 @@ public class PedidoServlet extends HttpServlet {
                 pedido.setValorTotal(valorTotal);
                 pedido.setRoupas(roupas);
                 pedido.setSituacao(estado);
-                // INSERIR Cliente da session
-                Cliente cliente = new Cliente();
-                cliente.setId(1);
+
+                Cliente cliente = ClienteFacade.buscarCliente(usuario.getId());
                 pedido.setCliente(cliente);
                 PedidoFacade.inserirPedido(pedido);
 
                 // Redireciona pagina de pedidos, editar...
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/PesquisarPedidos.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/PedidoServlet?action=list");
                 rd.forward(request, response);
             } catch (BuscarRoupaException | InserirPedidoException | RuntimeException e) {
                 request.setAttribute("mensagem", "ERRO: " + e.getMessage());
@@ -121,8 +132,7 @@ public class PedidoServlet extends HttpServlet {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
             rd.forward(request, response);
         } else if (action.equals("list") && !isFuncionario) {
-            int idCliente = 1;
-            List<Pedido> pedidos = PedidoFacade.buscarPedidosEmAberto(idCliente);
+            List<Pedido> pedidos = PedidoFacade.buscarPedidosEmAberto(usuario.getId());
             request.setAttribute("pedidos", pedidos);
             request.setAttribute("funcionario", isFuncionario);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard.jsp");
