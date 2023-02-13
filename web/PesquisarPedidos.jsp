@@ -125,7 +125,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <c:set var="fromSearch" value="Vim da pesquisa" scope="request"/>
                     <c:forEach var="pedido" items="${pedidos}">
+                        <c:if test="${sessionScope.usuario.nome eq pedido.cliente.nome or sessionScope.usuario.funcionario}">
                         <tr>
                             <td><a id="link" href="PedidoServlet?action=view&id=${pedido.id}">${pedido.id}</a></td>
                             <c:if test="${sessionScope.usuario.funcionario}"><th style="color: grey">${pedido.cliente.nome}</th></c:if>
@@ -135,7 +137,8 @@
                             
                          <c:choose>
                             <c:when test="${pedido.situacao == 'EM_ABERTO'}">
-                                <td><c:if test="${funcionario}"><a class="sit sit-aberto" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Confirmar Recolhimento</i></span></a></c:if></td> 
+                                <td><c:if test="${funcionario}"><a class="sit sit-aberto" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Confirmar Recolhimento</i></span></a></c:if>
+                                <c:if test="${!funcionario}"><a class="sit sit-abertocli" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Cancelar Pedido</i></span></a></c:if></td>
                             </c:when>
                             <c:when test="${pedido.situacao == 'RECOLHIDO'}">
                                 <td><c:if test="${funcionario}"><a class="sit sit-recolhido" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;">Confirmar Lavagem</i></span></a></c:if></td>  
@@ -148,6 +151,7 @@
                             </c:when>    
                           </c:choose>
                         </tr>
+                        </c:if>
                     </c:forEach>
                 </tbody>
             </table>

@@ -63,7 +63,8 @@
                             <td class="situacao situacao-<c:out value="${fn:replace(pedido.situacao,'_','')}"/>"><c:out value="${fn:replace(pedido.situacao,'_',' ')}"/></td>
                             <c:choose>
                                 <c:when test="${pedido.situacao == 'EM_ABERTO'}">
-                                    <td><c:if test="${funcionario}"><a class="sit sit-aberto" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='loader'></i></span></a></c:if></td> 
+                                    <td><c:if test="${funcionario}"><a class="sit sit-aberto" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='loader'></i></span></a></c:if> 
+                                    <c:if test="${!funcionario}"><a class="sit sit-abertocli" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='loader'></i></span></a></c:if></td>
                                             </c:when>
                                             <c:when test="${pedido.situacao == 'REJEITADO' || pedido.situacao == 'CANCELADO'}">
                                     <td><c:if test="${!funcionario}"><a class="sit sit-rejeitado" data-code="${pedido.id}"><span style="color:mediumorchid; margin-right: 10px;"><i data-feather='x-octagon'></i></span></a></c:if></td>  

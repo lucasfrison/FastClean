@@ -54,8 +54,14 @@ public class PedidoFacade {
                 case "aberto":
                     pDao.alterarEstadoPedido(pedido, "RECOLHIDO");
                     break;
+                case "abertocli":
+                    pDao.alterarEstadoPedido(pedido, "CANCELADO");
+                    break;
                 case "recolhido":
                     pDao.alterarEstadoPedido(pedido, "AGUARDANDO_PAGAMENTO");
+                    break;
+                case "aguardando":
+                    pDao.alterarEstadoPedido(pedido, "PAGO");
                     break;
                 case "pago":
                     pDao.alterarEstadoPedido(pedido, "FINALIZADO");
